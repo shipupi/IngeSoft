@@ -1,2 +1,8 @@
 # IngeSoft
-TP Grupal de Ingenieria de Software I
+TPetPack's web-based solution for PetVet's Delivery Service
+
+## Completed
+None yet
+
+## Ready for Revision
+* UCD
