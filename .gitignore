@@ -1,6 +1,8 @@
 #Don't track content of these folders
+
 pycache/
-__pycache__/
+3.\ Development/PetVet/catalog/tests/__pycache__
+3.\ Development/PetVet/PetVet/__pycache__
 
 #Compiled source#
 *.com

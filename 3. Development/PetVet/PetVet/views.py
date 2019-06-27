@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import LoginForm, RegisterForm
 
 def login_page(request):
@@ -16,6 +17,7 @@ def login_page(request):
         username = login_form.cleaned_data.get("username")
         password = login_form.cleaned_data.get("password")
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             #success page
             login(request, user)
