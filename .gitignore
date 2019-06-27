@@ -1,5 +1,6 @@
 #Don't track content of these folders
 pycache/
+__pycache__/
 
 #Compiled source#
 *.com
