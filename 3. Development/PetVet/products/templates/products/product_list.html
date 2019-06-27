@@ -15,8 +15,8 @@
 {% for product in object_list %}
 <tr>
 <td>{{ product.name }}</td>
-<td>{{ product.email }}</td>
-<td>{{ product.address }}</td>
+<td>{{ product.description }}</td>
+<td>{{ product.price }}</td>
 
 <td>
 <a  href="{% url 'product_detail'  product.id  %}">details</a>

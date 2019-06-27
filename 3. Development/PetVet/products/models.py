@@ -8,7 +8,7 @@ class Category(models.Model):
 		return self.name
 
 
-class  Products(models.Model):
+class  Product(models.Model):
 	name = models.CharField(max_length=100)
 	# email = models.EmailField()
 	description = models.CharField(max_length=1000)
