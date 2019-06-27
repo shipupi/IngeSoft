@@ -1,0 +1,30 @@
+<h1>Contacts</h1>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Image</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+{% for product in object_list %}
+<tr>
+<td>{{ product.name }}</td>
+<td>{{ product.email }}</td>
+<td>{{ product.address }}</td>
+
+<td>
+<a  href="{% url 'product_detail'  product.id  %}">details</a>
+<a  href="{% url 'product_edit'  product.id  %}">edit</a>
+<a  href="{% url 'product_delete'  product.id  %}">delete</a>
+</td>
+</tr>
+
+{% endfor %}
+</tbody>
+</table>

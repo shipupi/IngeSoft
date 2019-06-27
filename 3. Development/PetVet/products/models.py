@@ -11,10 +11,10 @@ class Category(models.Model):
 class  Products(models.Model):
 	name = models.CharField(max_length=100)
 	# email = models.EmailField()
-	descripcion = models.CharField(max_length=1000)
-	precio =models.IntegerField()
+	description = models.CharField(max_length=1000)
+	price =models.IntegerField()
 	stock =models.IntegerField()
-	imagen =models.CharField(max_length=1000)
+	image =models.ImageField(upload_to="images/")
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 	def __str__(self):
