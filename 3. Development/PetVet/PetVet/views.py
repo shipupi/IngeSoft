@@ -33,3 +33,10 @@ def register_page(request):
     }
     return render(request, "auth/view.html", context)
 
+def cart_page(request):
+    context = {
+        "title": "Shopping Cart"
+    }
+    return render(request, "auth/view.html", context)
+
+
