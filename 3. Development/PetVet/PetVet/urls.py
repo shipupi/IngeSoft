@@ -25,7 +25,6 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
     path('cart/', cart_page),
 
-
 	# products
-	path('products_list', products_views.ProductsList.as_view(), name='products_list')
+	path('products', products_views.ProductsList.as_view(), name='product_list')
 ]
