@@ -9,29 +9,34 @@ from .models import Category
 class CategoryList(ListView): 
 	model = Category
 
-class ProductsList(ListView): 
+class ProductList(ListView): 
 	model = Product
 
 class CategoryDetail(DetailView): 
 	model = Category
 
-class ProductsDetail(DetailView): 
+class ProductDetail(DetailView): 
 	model = Product
 
 class CategoryCreate(CreateView): 
 	model = Category
+	fields = ['name']
 
-class ProductsCreate(CreateView): 
+class ProductCreate(CreateView): 
 	model = Product
+	fields = ['name', 'description','image','category','stock']
 
 class CategoryUpdate(UpdateView): 
 	model = Category
+	fields = ['name']
 
-class ProducsUpdate(UpdateView): 
+class ProductUpdate(UpdateView): 
 	model = Product
+	fields = ['name', 'description','image','category','stock']
+
 
 class CategoryDelete(DeleteView): 
 	model = Category
 
-class ProductsDelete(DeleteView): 
+class ProductDelete(DeleteView): 
 	model = Product
