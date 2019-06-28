@@ -15,7 +15,7 @@ class  Product(models.Model):
 	price =models.IntegerField()
 	stock =models.IntegerField()
 	image =models.ImageField(upload_to="images/")
-	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	categories = models.ManyToManyField(Category)
 
 	def __str__(self):
 		return self.name
