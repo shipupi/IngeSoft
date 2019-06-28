@@ -1,6 +1,8 @@
 from parameterized import parameterized
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.test import TestCase
+from PetVet import forms
 
 from django.test import Client
 import unittest
@@ -86,6 +88,72 @@ for behaviour, test_cases in test_case_data_wrong_login.items():
 
 #-------------------- TESTING REGISTRATION -----------------------#
 
+addCredential = {
+    'username': 'Felix Oj',
+    'email': 'foj@gmail.com',
+    'password': 'mybirthday'
+}
+
+class RegistrationTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print(addCredential)
+        User.objects.create_user(username=addCredential['username'],
+                                 email=addCredential['email'],
+                                 password=addCredential['password'])
+
+    """
+    A GET to the register view uses the appropriate
+    template and populates the registration form into the context.
+    """
+    def test_registration_get(self):
+     
+        response = self.client.get(reverse('register_page'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'auth/view.html')
+        self.failUnless(isinstance(response.context['form'],
+                                   forms.RegisterForm))
+
+    """
+    A POST to the register view with valid register data properly
+    creates a new user and issues a redirect.
+    """
+    def test_registration_post_success(self):
+        data = {
+            'username': 'Raian Pagano',
+            'email1': 'rpagano@gmail.com',
+            'password': 'fox38DOG90'
+        }
+        response = self.client.post(reverse('register_page'), data)  
+                                
+        # Upon success will redirect to the registration_complete page
+        #self.assertRedirects(response,
+        #                     'http://127.0.0.1:8000%s' % reverse('login_page'))
+    
+    """
+    A POST to the register view with an existing username does not
+    create a user, and displays appropriate error messages.
+    """
+    def test_registration_post_failure_username_taken(self):
+        data = {
+            'username': addCredential['username'],
+            'email': 'felixoj@gmail.com',
+            'password': 'mydifferentbirthday'
+        }
+        
+        response = self.client.post(reverse('register_page'), data)                                    
+        self.assertEqual(response.status_code, 200)
+        self.failIf(response.context['form'].is_valid())        #Should not be valid!
+        self.assertFormError(response, 'form', field=None,      #Appropiate error message
+                             errors="Username already taken")
    
+  
+    # EL EMAIL VA A SER SOLAMENTE @GMAIL.COM???
 
-
+    @classmethod
+    def tearDownClass(cls):
+        username = addCredential['username']
+        u = User.objects.get(username = username)
+        print(u)
+        u.delete()
