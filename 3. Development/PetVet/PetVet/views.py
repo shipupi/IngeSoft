@@ -11,8 +11,8 @@ def login_page(request):
             "title": "Login Page",
             "form" : login_form
     }
-    print("User logged in?")
-    print(request.user.is_authenticated)
+    #print("User logged in?")
+    #print(request.user.is_authenticated)
     if login_form.is_valid():
         print(login_form.cleaned_data)
         username = login_form.cleaned_data.get("username")
@@ -26,7 +26,7 @@ def login_page(request):
             #return redirect('/home')
         else:
             #failure page
-            print("Error")
+            print("Error: Incorrect login")
 
     return render(request, "auth/view.html", context)
 
@@ -46,7 +46,9 @@ def register_page(request):
         new_user = User.objects.create_user(username=username, email=email,
                 password=password)
         print(new_user)
-        return redirect(reverse(register_complete_page))
+        
+        # Redirect the user to the registration complete page
+        return redirect(reverse('register_complete_page'))
 
     return render(request, "auth/view.html", context)
 
