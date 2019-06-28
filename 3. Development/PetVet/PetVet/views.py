@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import LoginForm, RegisterForm
 
+#---------------------- LOGIN ------------------------#
 def login_page(request):
     login_form = LoginForm(request.POST or None)
     context = {
@@ -29,6 +30,7 @@ def login_page(request):
 
     return render(request, "auth/view.html", context)
 
+#-------------------- REGISTRATION ---------------------#
 User = get_user_model()
 def register_page(request):
     register_form = RegisterForm(request.POST or None)
@@ -44,8 +46,16 @@ def register_page(request):
         new_user = User.objects.create_user(username=username, email=email,
                 password=password)
         print(new_user)
+        return redirect(reverse(register_complete_page))
+
     return render(request, "auth/view.html", context)
 
+#------------- REGISTRATION COMPLETE ----------------#
+def register_complete_page(request):
+    template = 'auth/register_complete.html'
+    return render(request, template, {})
+
+#---------------------- CART ------------------------#
 def cart_page(request):
     context = {
         "title": "Shopping Cart"
