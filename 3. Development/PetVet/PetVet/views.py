@@ -22,7 +22,7 @@ def login_page(request):
             #success page
             login(request, user)
             #context['form'] = LoginForm()
-            return redirect('/home')
+            #return redirect('/home')
         else:
             #failure page
             print("Error")
