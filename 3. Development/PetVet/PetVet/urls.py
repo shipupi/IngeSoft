@@ -20,10 +20,10 @@ from products import views as products_views
 from .views import login_page, register_page, cart_page
 
 urlpatterns = [
-	path('', login_page),
-	path('registration/', register_page),
-	path('admin/', admin.site.urls),
-    path('cart/', cart_page),
+	path('', login_page, name='login_page'),
+	path('registration/', register_page, name='register_page'),
+	path('admin/', admin.site.urls, name='admin'),
+    path('cart/', cart_page, name='cart_page'),
 
 	# products
 	path('products', products_views.ProductsList.as_view(), name='product_list')
