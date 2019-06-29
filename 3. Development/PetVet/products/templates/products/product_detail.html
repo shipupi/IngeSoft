@@ -1,0 +1,10 @@
+<h1>ProductDetails</h1>
+
+<p>Name: {{product.name}}</p>
+<p>Description: {{product.description}}</p>
+<p>Image<img src="{{product.image}}">
+<ul>
+{% for category in product.categories.all%}
+	<li>{{category.name}}</li>
+{% endfor %}
+</ul>
