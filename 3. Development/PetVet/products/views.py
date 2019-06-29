@@ -18,7 +18,16 @@ def product_list(request, category_slug=None):
             'categories' : categories,
             'products' : products
     }
-    return render(request, 'products/list.html', context)
+    print(products)
+    print(products[0].name)
+    return render(request, 'products/product_list.html', context)
+
+def products_detail(request, id, slug):
+    product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    context = {
+            'product' : product
+    }
+    return render(request, 'products/detail.html', context)
 
 class CategoryList(ListView): 
 	model = Category

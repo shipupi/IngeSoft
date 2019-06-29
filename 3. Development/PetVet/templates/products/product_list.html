@@ -1,0 +1,33 @@
+<h1>Products</h1>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Image</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+{% for product in products %}
+<tr>
+<td>{{ product.name }}</td>
+<td>{{ product.description }}</td>
+<td>{{ product.price }}</td>
+
+<td>
+    <!--
+{% comment %}
+<a  href="{% url 'product_detail'  product.id  %}">details</a>
+<a  href="{% url 'product_edit'  product.id  %}">edit</a>
+<a  href="{% url 'product_delete'  product.id  %}">delete</a> 
+{% endcomment %} -->
+</td>
+</tr>
+
+{% endfor %}
+</tbody>
+</table>
