@@ -1,0 +1,12 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Vitalcan 500kg",
+      "description": "Vitalcan 500kg - Extra carne",
+      "price": 500,
+      "stock": 10
+    }
+  }
+]

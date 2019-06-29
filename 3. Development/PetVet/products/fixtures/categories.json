@@ -1,0 +1,10 @@
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Comida para perros"
+    },
+    "categories": [1]
+  }
+]
