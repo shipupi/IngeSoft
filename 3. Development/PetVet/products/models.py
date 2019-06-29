@@ -28,7 +28,6 @@ class  Product(models.Model):
     stock =models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    #removed_at ??
     image = models.ImageField(upload_to="images/", blank=True)
 
     class Meta:
