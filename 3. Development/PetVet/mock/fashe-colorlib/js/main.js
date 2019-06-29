@@ -202,3 +202,9 @@
     });
 
 })(jQuery);
+
+$(document).ready(function(){
+    if ($('#search').css("width") == "0px") {
+        $("#search").css("width", "350px");
+    }
+});

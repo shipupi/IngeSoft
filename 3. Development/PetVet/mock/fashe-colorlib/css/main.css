@@ -2346,4 +2346,46 @@ input.num-product::-webkit-inner-spin-button {
     margin: 0; 
 }
 
+.divide1{
+	margin-right: 11px;
+}
 
+.divide2{
+	margin-right: 5px;
+}
+
+input[type="search"]{
+	width: 0;
+	text-indent: 10px;
+	position: relative;
+	padding: 0;
+	transition: all 2s;
+}
+
+a.fa-search {
+	height: 58px;
+	width: 58px;
+	background-color: black;
+	border-radius: 35px;
+	color: #FFF;
+	text-decoration: none;
+	text-align: center;
+	line-height: 58px;
+	font-size: 22px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	transition: all .3s;
+}
+
+a.fa-search:hover {
+	background-color: #e65540;
+}
+
+.menu {
+	position: relative;
+}
+
+#search-container {
+	margin-right: 35px;
+}
