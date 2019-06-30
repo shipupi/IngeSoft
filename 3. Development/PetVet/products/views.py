@@ -2,15 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Product, Category
+from cart.forms import CartAddProductForm
 
 # Create your views here.
 
-def product_list(request, category_slug=None):
+def product_list(request, slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
+    if slug:
+        category = get_object_or_404(Category, slug=slug)
         products = Product.objects.filter(category=category)
 
     context = {
@@ -22,8 +23,11 @@ def product_list(request, category_slug=None):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    cart_product_form = CartAddProductForm()
     context = {
-            'product' : product
+            'product' : product,
+            '   ': cart_product_form
+
     }
     return render(request, 'products/product_detail.html', context)
 

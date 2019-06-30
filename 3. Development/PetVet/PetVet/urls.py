@@ -25,6 +25,8 @@ urlpatterns = [
 	path('registration/', register_page, name='register_page'),
 	path('registration-complete/', register_complete_page, name='register_complete_page'),
 	path('admin/', admin.site.urls, name='admin'),
-    path('cart/', cart_page, name='cart_page'),
-    path('', include('products.urls'))
+
+	# Includes
+    path('', include('products.urls')),
+    path('cart', include('cart.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
