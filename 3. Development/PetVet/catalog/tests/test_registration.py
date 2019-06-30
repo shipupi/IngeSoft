@@ -102,7 +102,6 @@ class RegistrationTest(TestCase):
         for registration_data in existing_credentials:
             username, email, password = registration_data
             u = User.objects.get(username = username)
-            print(u)
             u.delete()
 
 

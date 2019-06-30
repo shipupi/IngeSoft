@@ -82,7 +82,6 @@ class LoginTest(TestCase):
         for login_data in existing_credentials:
             username, email, password = login_data
             u = User.objects.get(username = username)
-            print(u)
             u.delete()
 
 
