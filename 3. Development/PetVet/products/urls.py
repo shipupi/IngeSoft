@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
 from .views import product_list, product_detail
 
 app_name = 'products'
 
 urlpatterns = [
     path('products/', product_list, name="list_of_prod"),
+    url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', product_detail, name="product_detail"),
 
 
 ]
