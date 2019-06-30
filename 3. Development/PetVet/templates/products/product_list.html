@@ -11,6 +11,7 @@
 <th>Stock</th>
 <th>Image</th>
 <th>Category</th>
+<th>Link</th>
 </tr>
 </thead>
 <tbody>
@@ -24,7 +25,7 @@
 <td>{{ product.stock}}</td>
 <td>{{ product.image}}</td>
 <td>{{ product.category}}</td>
-
+<td>{{ product.get_absolute_url }}</td>
 
 <td>
     <!--
