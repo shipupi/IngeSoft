@@ -2231,7 +2231,8 @@ li.sale-noti > a {
 /*[ Modal video 01 ]
 ///////////////////////////////////////////////////////////
 */
-body {padding-right: 0px !important;}
+body {padding-right: 0px !important;
+  background-image: url("../images/icons/body-background.png");}
 
 .modal {
   padding: 0px !important;
@@ -2390,4 +2391,9 @@ a.fa-search:hover {
   max-width: 1200px;
   justify-content: center;
   align-items: center;
+}
+
+.block2-img {
+  max-width: 270px;
+  max-height: 360px;
 }
