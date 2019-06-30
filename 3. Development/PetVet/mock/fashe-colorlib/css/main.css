@@ -600,6 +600,8 @@ iframe {
 /*[ Menu ]
 ===========================================================*/
 .wrap_header {
+  background-color: cornsilk !important;
+  background-image: url("../images/icons/header-background.png") ;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -783,7 +785,7 @@ li.sale-noti > a {
   display: block;
   height: 20px;
   width: 1px;
-  background-color: #e5e5e5;
+  background-color: #888888;
   margin-left: 23px;
   margin-right: 23px;
   margin-top: 5px;
