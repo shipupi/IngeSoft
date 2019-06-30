@@ -82,19 +82,14 @@
 
      /*[ Fixed Header ]
     ===========================================================*/
-    var posWrapHeader = $('.topbar').height();
     var header = $('.container-menu-header');
 
     $(window).on('scroll',function(){
 
-        if($(this).scrollTop() >= posWrapHeader) {
+        if($(this).scrollTop() >= header.height()) {
             $('.header1').addClass('fixed-header');
-            $(header).css('top',-posWrapHeader); 
-
         }  
         else {
-            var x = - $(this).scrollTop(); 
-            $(header).css('top',x); 
             $('.header1').removeClass('fixed-header');
         } 
 
@@ -204,7 +199,10 @@
 })(jQuery);
 
 $(document).ready(function(){
-    if ($('#search').css("width") == "0px") {
-        $("#search").css("width", "350px");
+    if ($('.wrap-menu').css("flex-grow") == "0") {
+        $(".wrap-menu").css("flex-grow", "1");
     }
+});
+
+$(document).ready(function(){
 });
