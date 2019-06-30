@@ -20,7 +20,7 @@
                         <div class="col-md-6" style="padding-left: 20px">
                             <h3>{{ product.name }}</h3>
                             <h6><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h6>
-                            <p class="text-muted">Kshs. {{ product.price }}</p>
+                            <p class="text-muted">Precio: {{ product.price }}</p>
                             <form action="{% url "cart:cart_add" product.id %}" method="post">
                                 {% csrf_token %}
                                 {{ cart_product_form }}
