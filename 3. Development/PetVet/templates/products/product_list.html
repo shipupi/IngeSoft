@@ -1,0 +1,42 @@
+<h1>Products</h1>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Slug</th>
+<th>Price</th>
+<th>Available</th>
+<th>Stock</th>
+<th>Image</th>
+<th>Category</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+{% for product in products %}
+<tr>
+<td>{{ product.name }}</td>
+<td>{{ product.description }}</td>
+<td>{{ product.slug }}</td>
+<td>{{ product.price }}</td>
+<td>{{ product.available }}</td>
+<td>{{ product.stock}}</td>
+<td>{{ product.image}}</td>
+<td>{{ product.category}}</td>
+<td><a href="{{ product.get_absolute_url }}">Detalle</a></td>
+
+<td>
+    <!--
+{% comment %}
+<a  href="{% url 'product_detail'  product.id  %}">details</a>
+<a  href="{% url 'product_edit'  product.id  %}">edit</a>
+<a  href="{% url 'product_delete'  product.id  %}">delete</a> 
+{% endcomment %} -->
+</td>
+</tr>
+
+{% endfor %}
+</tbody>
+</table>
