@@ -23,7 +23,7 @@
 <td>{{ product.price }}</td>
 <td>{{ product.available }}</td>
 <td>{{ product.stock}}</td>
-<td>{{ product.image}}</td>
+<td><img src="{{ product.image.url}}"/></td>
 <td>{{ product.category}}</td>
 <td><a href="{{ product.get_absolute_url }}">Detalle</a></td>
 
