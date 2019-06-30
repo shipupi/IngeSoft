@@ -22,7 +22,7 @@ def product_list(request, category_slug=None):
     print(products[0].name)
     return render(request, 'products/product_list.html', context)
 
-def products_detail(request, id, slug):
+def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     context = {
             'product' : product
