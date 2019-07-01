@@ -22,13 +22,13 @@ def login_page(request):
         if user is not None:
             #success page
             login(request, user)
-            #context['form'] = LoginForm()
-            #return redirect('/home')
+            context['form'] = LoginForm()
+            return redirect('/')
         else:
             #failure page
             print("Error: Incorrect login")
 
-    return render(request, "auth/view.html", context)
+    return render(request, "auth/login.html", context)
 
 #-------------------- REGISTRATION ---------------------#
 User = get_user_model()
@@ -50,7 +50,7 @@ def register_page(request):
         # Redirect the user to the registration complete page
         return redirect(reverse('register_complete_page'))
 
-    return render(request, "auth/view.html", context)
+    return render(request, "auth/register.html", context)
 
 #------------- REGISTRATION COMPLETE ----------------#
 def register_complete_page(request):
