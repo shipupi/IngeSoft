@@ -42,7 +42,7 @@ class Product(models.Model):
 
 
     def get_absolute_url(self):
-        print(reverse('products:product_detail', args=[self.id, self.slug]))
-        print('ahí lo imprimí')
+        #print(reverse('products:product_detail', args=[self.id, self.slug]))
+        #print('ahí lo imprimí')
         return reverse('products:product_detail', args=[self.id, self.slug])
 

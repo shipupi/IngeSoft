@@ -10,10 +10,10 @@ from products import urls
 class ProductTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.category = Category.objects.create(name="Prod Views", slug="pviews/")
+        cls.category = Category.objects.create(name="Prod Views", slug="pviews")
 
     def setUp(self):
-        self.product1 = Product.objects.create(category=self.category, name="Prod1", slug="p1/", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
+        self.product1 = Product.objects.create(category=self.category, name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
 
     def test_product_list_view_get(self):
         response = self.client.get(reverse('products:products_list'))
