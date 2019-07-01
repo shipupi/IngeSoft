@@ -200,16 +200,31 @@ class CartViewTest(TestCase):
         self.failUnless(isinstance(response.context['cart'], Cart))
 
     """
-    A POST to the cart remove view properly redirects.
+    A POST to the cart add product view properly redirects.
     """
     def test_cart_add_view_redirect(self):
         response = self.client.post(reverse('cart:cart_add', kwargs={'product_id':self.product.id}), data={'quantity':10})
         self.assertRedirects(response, reverse('cart:cart_detail'))
 
     """
-    A POST to the cart remove view properly redirects.
+    A POST to the cart add product view with invalid product data redirects 404 status erorr page.
     """
-    def test_cart_add_view_redirect(self):
+    def test_cart_add_product_view_redirect_404(self):
+        response = self.client.post(reverse('cart:cart_add', kwargs={'product_id':100}), data={'quantity':10})
+        self.assertEqual(response.status_code, 404)
+    
+    """
+    A POST to the cart remove product view properly redirects.
+    """
+    def test_cart_remove_product_view_redirect(self):
         response = self.client.post(reverse('cart:cart_remove', kwargs={'product_id':self.product.id}))
         self.assertRedirects(response, reverse('cart:cart_detail'))
 
+    """
+    A POST to the cart remove product view with invalid product data redirects 404 status erorr page.
+    """
+    def test_cart_remove_product_view_redirect_404(self):
+        response = self.client.post(reverse('cart:cart_add', kwargs={'product_id':100}))
+        self.assertEqual(response.status_code, 404)
+
+#"""
