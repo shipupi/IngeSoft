@@ -15,7 +15,6 @@ class CartWithProductTest(TestCase):
     	cls.category = Category.objects.create(name="Things", slug="things/")
 	
     def setUp(self):
-        #self.client = Client()
         self.request = RequestFactory()
         self.request.user = AnonymousUser()
         self.request.session ={}
