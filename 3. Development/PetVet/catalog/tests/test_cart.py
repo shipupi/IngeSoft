@@ -5,10 +5,11 @@ from decimal import Decimal
 import datetime
 
 from cart.cart import Cart
+from cart.forms import CartAddProductForm
 from products.models import Product, Category
+from cart.urls import urlpatterns
 
-
-class CartAndProductTest(TestCase):
+class CartWithProductTest(TestCase):
     @classmethod
     def setUpTestData(cls):
     	cls.category = Category.objects.create(name="Things", slug="things/")
@@ -126,9 +127,57 @@ class CartAndProductTest(TestCase):
     	self.assertEqual(len(self.cartObj), 8)
     	self.assertEqual(self.cartObj.get_total_price(), 240)
 
-        
+    """
+    Testing the correct removal of a product from the cart
+    """
+    def test_remove_product_from_cart(self):
+        product1 = self.create_product(name="To remove product1", slug="R1/")
+        product2 = self.create_product(name="To remove product2", slug="R2/")
+        self.cartObj.add(product1, quantity=1)
+        self.cartObj.add(product2, quantity=1)
 
-""" TO IMPLEMENT
+        self.assertEqual(len(self.cartObj), 2)
+
+        self.cartObj.remove(product1)
+        self.assertEqual(len(self.cartObj), 1)
+
+        self.cartObj.remove(product2)
+        self.assertEqual(len(self.cartObj), 0)
+
+
+#--------------------------- CART FORM -----------------------------#
+
+valid_form_data = [{'quantity':2, 'update':True},
+                   {'quantity':20, 'update':''}]
+                  
+invalid_form_data = [{'quantity':0, 'update':True},     #Quantity cannot be 0
+                     {'quantity':-10, 'update':False},  #Quantity cannot be negative
+                     {'quantity':1000, 'update':''}]    #Quantity exceeds the limit
+
+class CartAddProductFormTest(TestCase):
+    """
+    Form should be valid when quantity is positive 
+    and in the correct limits
+    """
+    def test_cart_add_product_form_valid(self):
+        for data in valid_form_data:
+            form = CartAddProductForm(data)
+            self.assertTrue(form.is_valid())
+
+    """
+    Form should be invalid when quantity is negative/zero
+    or whenr it exceeds the maximum amount
+    """
+    def test_cart_add_product_form_invalid(self):
+        for data in invalid_form_data:
+            form = CartAddProductForm(data)
+            self.assertFalse(form.is_valid())
+
+
+#--------------------------- CART VIEWS -----------------------------#
+
+""" Can't properly include cart_detail_page???
+
 class CartViewTest(TestCase):
 
     def setUp(self):
@@ -138,11 +187,13 @@ class CartViewTest(TestCase):
     	self.request.session = {}
 
     def test_cart_detail_view_get(self):
-    	response = self.client.get(reverse('cart_detail_page'))
+        response = self.client.get(reverse('cart_detail_page'))
         self.assertEqual(response.status_code, 200)
         #fix me, path might be incorrect
-        self.assertTemplateUsed(response,
-                                'cart/templates/cart/detail.html')
+        self.assertTemplateUsed(response,'templates/cart/detail.html')
         self.failUnless(isinstance(response.context['cart'], Cart))
-"""
 
+    def test_cart_add_view_redirect(self):
+
+
+"""
