@@ -57,6 +57,10 @@ def register_complete_page(request):
     template = 'auth/register_complete.html'
     return render(request, template, {})
 
+def index(request):
+    template = 'index/index.html'
+    return render(request, template, {})
+
 #---------------------- CART ------------------------#
 def cart_page(request):
     context = {
