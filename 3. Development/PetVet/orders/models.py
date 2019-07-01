@@ -1,5 +1,6 @@
 from django.db import models
-
+from creditcards.models import CardNumberField, CardExpiryField
+from creditcards.models import SecurityCodeField
 # Create your models here.
 from products.models import Product
 
@@ -12,7 +13,11 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    cc_number = CardNumberField('card number', default='0000000000000000')
+    cc_expiry = CardExpiryField('expiration date', default="00/0000")
+    cc_code = SecurityCodeField('security code', default ='000')
     paid = models.BooleanField(default=False)
+
 
     class Meta:
         ordering=('-created',)
