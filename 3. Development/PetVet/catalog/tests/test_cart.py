@@ -12,7 +12,7 @@ from cart import urls
 class CartWithProductTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-    	cls.category = Category.objects.create(name="Things", slug="things/")
+    	cls.category = Category.objects.create(name="Things", slug="things")
 	
     def setUp(self):
         self.request = RequestFactory()
@@ -69,8 +69,8 @@ class CartWithProductTest(TestCase):
     can iterate through these said products correctly
     """
     def test_cart_add_new_product_and_iter(self):
-    	product1 = self.create_product(name="First product", slug="1/")
-    	product2 = self.create_product(name="Second product", slug="2/")
+    	product1 = self.create_product(name="First product", slug="1")
+    	product2 = self.create_product(name="Second product", slug="2")
     	self.cartObj.add(product1, quantity=1)
     	self.cartObj.add(product2, quantity=2)
 
@@ -95,7 +95,7 @@ class CartWithProductTest(TestCase):
     Supposing the product.id section works properly
     """
     def test_cart_add_update_quantity(self):
-    	product = self.create_product(name="Update product", slug="U/")
+    	product = self.create_product(name="Update product", slug="U")
     	
     	self.cartObj.add(product, quantity=1)				# Adding the product for the first time to the cart
     	self.cartObj.add(product, quantity=3, update_quantity=False)  	# Adding quantity to the product --> should ADD to the previous one
@@ -108,8 +108,8 @@ class CartWithProductTest(TestCase):
     Testing the correct updating of the carts length and total price
     """
     def test_cart_update_len_and_total_price(self):
-    	product1 = self.create_product(name="Update cart product1", slug="U1/")
-    	product2 = self.create_product(name="Update cart product2", slug="U2/", price=Decimal("20"))
+    	product1 = self.create_product(name="Update cart product1", slug="U1")
+    	product2 = self.create_product(name="Update cart product2", slug="U2", price=Decimal("20"))
 
     	# Cart is empty except these three products that are worth 100 each
     	self.cartObj.add(product1, quantity=3)
@@ -130,8 +130,8 @@ class CartWithProductTest(TestCase):
     Testing the correct removal of a product from the cart
     """
     def test_remove_product_from_cart(self):
-        product1 = self.create_product(name="To remove product1", slug="R1/")
-        product2 = self.create_product(name="To remove product2", slug="R2/")
+        product1 = self.create_product(name="To remove product1", slug="R1")
+        product2 = self.create_product(name="To remove product2", slug="R2")
         self.cartObj.add(product1, quantity=1)
         self.cartObj.add(product2, quantity=1)
 
@@ -179,14 +179,14 @@ class CartAddProductFormTest(TestCase):
 class CartViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.category = Category.objects.create(name="Views", slug="views/")
+        cls.category = Category.objects.create(name="Views", slug="views")
 
     def setUp(self):
         self.client = Client()
         self.request = RequestFactory()
         self.request.user = AnonymousUser()
         self.request.session = {}
-        self.product = Product.objects.create(category=self.category, name="Prod Name", slug="slug/", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
+        self.product = Product.objects.create(category=self.category, name="Prod Name", slug="slug", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
    
     """
     A GET to the cart detail view uses the appropriate

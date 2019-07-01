@@ -10,23 +10,65 @@ from products import urls
 class ProductTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.category = Category.objects.create(name="Prod Views", slug="pviews")
+        cls.category = Category.objects.create(name='C1', slug='c1')
+        cls.category2 = Category.objects.create(name='C2', slug='c2')
 
     def setUp(self):
         self.product1 = Product.objects.create(category=self.category, name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
 
-    def test_product_list_view_get(self):
+    """
+    A GET to the product list view with no slug uses the appropriate
+    template and populates the context with the correct information.
+    """
+    def test_product_list_no_slug_view_get(self):
         response = self.client.get(reverse('products:products_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'products/product_list.html')
-        #self.failUnless(isinstance(response.context['category'], Category))
-        #self.failUnless(isinstance(response.context['categories'], Category))
-        #self.failUnless(isinstance(response.context['products'], Product))
+        self.assertEqual(response.context['category'], None)
+        self.assertEqual(list(response.context['categories']), list(Category.objects.all()))
+        self.assertEqual(list(response.context['products']), list(Product.objects.filter(available=True)))
 
+    """
+    A GET to the product list view with an existing category slug uses the appropriate
+    template and populates the context with the correct information.
+    """
+    def test_product_list_view_with_existing_slug_get(self):
+        response = self.client.get(reverse('products:product_list_by_category', kwargs={'slug':self.category.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'products/product_list.html')
+        self.failUnless(isinstance(response.context['category'], Category))
+        self.assertEqual(list(response.context['categories']), list(Category.objects.all()))
+        self.assertEqual(list(response.context['products']), list(Product.objects.filter(category=response.context['category'])))
+
+    """
+    A GET to the product list view with a non-existing category slug returns the 404 response
+    """
+    def test_product_list_view_with_nonexisting_slug_get_404(self):
+        response = self.client.get(reverse('products:product_list_by_category', kwargs={'slug':'Not-a-category-slug'}))
+        self.assertEqual(response.status_code, 404)
+       
+    """
+    A GET to the product detail view uses the appropriate template
+    """
     def test_existing_product_detail_view_get(self):
         response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':self.product1.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'products/product_detail.html')
+
+    """
+    A GET to the product detail view of a non existing product returns 404 in the response
+    """
+    def test_product_detail_view_get_404(self):
+        # Incorrect id
+        response = self.client.get(reverse('products:product_detail', kwargs={'id':0, 'slug':self.product1.slug}))
+        self.assertEqual(response.status_code, 404)
+        
+        # Incorrect slug
+        response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':'incorrect-slug'}))
+        self.assertEqual(response.status_code, 404)
+
+
+
         
 """
 def product_list(request, slug=None):
