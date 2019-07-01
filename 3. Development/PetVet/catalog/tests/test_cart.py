@@ -7,7 +7,7 @@ import datetime
 from cart.cart import Cart
 from cart.forms import CartAddProductForm
 from products.models import Product, Category
-from cart.urls import urlpatterns
+from cart import urls
 
 class CartWithProductTest(TestCase):
     @classmethod
@@ -154,7 +154,8 @@ invalid_form_data = [{'quantity':0, 'update':True},     #Quantity cannot be 0
                      {'quantity':-10, 'update':False},  #Quantity cannot be negative
                      {'quantity':1000, 'update':''}]    #Quantity exceeds the limit
 
-class CartAddProductFormTest(TestCase):
+
+class CartAddProductFormTest(TestCase):  
     """
     Form should be valid when quantity is positive 
     and in the correct limits
@@ -176,9 +177,12 @@ class CartAddProductFormTest(TestCase):
 
 #--------------------------- CART VIEWS -----------------------------#
 
-""" Can't properly include cart_detail_page???
+#""" Can't properly include cart_detail_page???
 
 class CartViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.category = Category.objects.create(name="Views", slug="views/")
 
     def setUp(self):
     	self.client = Client()
@@ -187,13 +191,15 @@ class CartViewTest(TestCase):
     	self.request.session = {}
 
     def test_cart_detail_view_get(self):
-        response = self.client.get(reverse('cart_detail_page'))
+        response = self.client.get(reverse('cart_detail'))
         self.assertEqual(response.status_code, 200)
         #fix me, path might be incorrect
         self.assertTemplateUsed(response,'templates/cart/detail.html')
         self.failUnless(isinstance(response.context['cart'], Cart))
 
     def test_cart_add_view_redirect(self):
+        product = Product.objects.create(category=self.category, name="Prod Name", slug="slug/", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
+        response = self.client.post(reverse('cart_add'), data={'product_id':product.id, 'quantity':10})
+        self.assertRedirects(response, reverse('cart_detail_page'))
 
-
-"""
+#"""
