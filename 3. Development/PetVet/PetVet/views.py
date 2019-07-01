@@ -22,8 +22,9 @@ def login_page(request):
         if user is not None:
             #success page
             login(request, user)
+            print("User logged in")
             #context['form'] = LoginForm()
-            #return redirect('/home')
+            #return redirect('/home') TODO
         else:
             #failure page
             print("Error: Incorrect login")

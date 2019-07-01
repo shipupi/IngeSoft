@@ -23,7 +23,9 @@
 <td>{{ product.price }}</td>
 <td>{{ product.available }}</td>
 <td>{{ product.stock}}</td>
+{% comment %}
 <!-- <td><img src="{{ product.image.url}}"/></td> -->
+{% endcomment %} 
 <td>{{ product.category}}</td>
 <td><a href="{{ product.get_absolute_url }}">Detalle</a></td>
 
