@@ -15,9 +15,8 @@ class ProductTest(TestCase):
     def setUp(self):
         self.product1 = Product.objects.create(category=self.category, name="Prod1", slug="p1/", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
 
-
     def test_product_list_view_get(self):
-        response = self.client.get(reverse('products:products_list')
+        response = self.client.get(reverse('products:products_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'products/product_list.html')
         #self.failUnless(isinstance(response.context['category'], Category))
@@ -25,7 +24,7 @@ class ProductTest(TestCase):
         #self.failUnless(isinstance(response.context['products'], Product))
 
     def test_existing_product_detail_view_get(self):
-        response = self.client.get(reverse('products:products_detail', kwargs={'id':self.product1.id, 'slug':self.product1.slug}))
+        response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':self.product1.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'products/product_detail.html')
         
