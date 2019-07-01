@@ -21,8 +21,9 @@ class Category(models.Model):
         return reverse('products:product_list_by_category', args=[self.slug])
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products',
-            on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, related_name='products')
+    # category = models.ForeignKey(Category, related_name='products',
+    #         on_delete=models.CASCADE)
     name = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
     description = models.TextField(blank=True)
