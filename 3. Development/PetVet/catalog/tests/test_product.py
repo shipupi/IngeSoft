@@ -15,6 +15,7 @@ class ProductTest(TestCase):
 
     def setUp(self):
         self.product1 = Product.objects.create(category=self.category, name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
+        self.product2 = Product.objects.create(category=self.category, name="Prod2", slug="p2", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
 
     """
     A GET to the product list view with no slug uses the appropriate
@@ -39,6 +40,16 @@ class ProductTest(TestCase):
         self.failUnless(isinstance(response.context['category'], Category))
         self.assertEqual(list(response.context['categories']), list(Category.objects.all()))
         self.assertEqual(list(response.context['products']), list(Product.objects.filter(category=response.context['category'])))
+
+    """
+    A GET to the product list view with an existing category slug which was never used on a product
+    returns an empty queryset in products. Also testing that it uses the correct template
+    """
+    def test_empty_product_list_by_category_view_get(self):
+        response = self.client.get(reverse('products:product_list_by_category', kwargs={'slug':self.category2.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'products/product_list.html')
+        self.assertEqual(list(response.context['products']), [])
 
     """
     A GET to the product list view with a non-existing category slug returns the 404 response
@@ -67,32 +78,3 @@ class ProductTest(TestCase):
         response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':'incorrect-slug'}))
         self.assertEqual(response.status_code, 404)
 
-
-
-        
-"""
-def product_list(request, slug=None):
-    category = None
-    categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
-    if slug:
-        category = get_object_or_404(Category, slug=slug)
-        products = Product.objects.filter(category=category)
-
-    context = {
-            'category' : category,
-            'categories' : categories,
-            'products' : products
-        }
-    return render(request, 'products/product_list.html', context)
-
-def product_detail(request, id, slug):
-    product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    cart_product_form = CartAddProductForm()
-    context = {
-            'product' : product,
-            'cart_product_form': cart_product_form
-
-    }
-    return render(request, 'products/product_detail.html', context)
-"""
