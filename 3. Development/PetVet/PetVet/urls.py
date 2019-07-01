@@ -21,7 +21,6 @@ from products import views as products_views
 from .views import *
 
 urlpatterns = [
-	path('', index, name='index'),
 	# path('', login_page, name='login_page'),
 	path('registration/', register_page, name='register_page'),
 	path('registration-complete/', register_complete_page, name='register_complete_page'),
