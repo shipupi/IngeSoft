@@ -23,7 +23,7 @@ from .views import product_list, product_detail
 app_name = 'products'
 
 urlpatterns = [
-    path('	', product_list, name="products_list"),
+    path('', product_list, name="products_list"),
     url(r'^(?P<slug>[-\w]+)/$', product_list, name="product_list_by_category"),
     url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', product_detail, name="product_detail"),
 ]

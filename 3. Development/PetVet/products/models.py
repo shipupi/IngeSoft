@@ -32,7 +32,7 @@ class Product(models.Model):
     stock =models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to="images/", blank=True)
+    image = models.ImageField(upload_to="product/%Y/%m/%d/", blank=True)
 
     class Meta:
         ordering = ('name',)

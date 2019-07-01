@@ -224,4 +224,38 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+
+
+    $(".selection-1").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect1')
+    });
+
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect2')
+    });
+    
+
+    /*[ No ui ]
+    of-hiddenof-hidden===========================================================*/
+     filterBar = document.getElementById('filter-bar');
+
+    noUiSlider.create(filterBar, {
+    start: [ 0, 1000 ],
+    connect: true,
+    range: {
+    'min': 0,
+    'max': 1000
+    }
+    });
+
+    var skipValues = [
+    document.getElementById('value-lower'),
+    document.getElementById('value-upper')
+    ];
+
+    filterBar.noUiSlider.on('update', function( values, handle ) {
+    skipValues[handle].innerHTML = Math.round(values[handle]) ;
+    });
 });
