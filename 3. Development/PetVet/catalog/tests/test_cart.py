@@ -177,8 +177,6 @@ class CartAddProductFormTest(TestCase):
 
 #--------------------------- CART VIEWS -----------------------------#
 
-#""" Can't properly include cart_detail_page???
-
 class CartViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -202,10 +200,16 @@ class CartViewTest(TestCase):
         self.failUnless(isinstance(response.context['cart'], Cart))
 
     """
-    A POST to the cart add view with valid product data properly redirects.
+    A POST to the cart remove view properly redirects.
     """
     def test_cart_add_view_redirect(self):
         response = self.client.post(reverse('cart:cart_add', kwargs={'product_id':self.product.id}), data={'quantity':10})
         self.assertRedirects(response, reverse('cart:cart_detail'))
 
-#"""
+    """
+    A POST to the cart remove view properly redirects.
+    """
+    def test_cart_add_view_redirect(self):
+        response = self.client.post(reverse('cart:cart_remove', kwargs={'product_id':self.product.id}))
+        self.assertRedirects(response, reverse('cart:cart_detail'))
+
