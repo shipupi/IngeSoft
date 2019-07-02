@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import LoginForm, RegisterForm
+from django.contrib import messages
 
 #---------------------- LOGIN ------------------------#
 def login_page(request):
@@ -27,7 +28,8 @@ def login_page(request):
             return redirect('/')
         else:
             #failure page
-            print("Error: Incorrect login")
+            messages.error(request,'username or password not correct')
+            return redirect('login_page')
 
     return render(request, "auth/login.html", context)
 

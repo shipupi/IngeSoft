@@ -4,8 +4,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control sizefull s-text7", 'placeholder': "Username"}))
+    password = forms.CharField(widget=forms.TextInput(attrs={'type': "password", 'class': "form-control sizefull s-text7", 'placeholder': "Password"}))
 
 class RegisterForm(forms.Form):
     username = forms.CharField(
