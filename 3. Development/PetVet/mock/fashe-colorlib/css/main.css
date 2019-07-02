@@ -2029,7 +2029,7 @@ li.sale-noti > a {
 -----------------------------------------------------------
 */
 .wrap-table-shopping-cart {
-  overflow: auto;
+  overflow: visible;
 }
 
 .container-table-cart::before {
@@ -2219,6 +2219,23 @@ li.sale-noti > a {
   .tab01 .nav-tabs {
     margin-right: -6px;
     margin-left: -6px;
+  }
+
+  .sm-sizefull{
+    width: 100%;
+  }
+
+  .sm-column{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
   }
 }
 
