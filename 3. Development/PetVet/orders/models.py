@@ -4,6 +4,7 @@ from creditcards.models import SecurityCodeField
 # Create your models here.
 from django.contrib.auth.models import User
 from products.models import Product
+from datetime import datetime, timedelta
 
 
 from django.contrib.auth import get_user_model
@@ -24,13 +25,18 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-
+    def get_items(self):
+        return OrderItem.objects.filter(order=self)
 
     class Meta:
         ordering=('-created',)
 
     def __str__(self):
         return 'Order{}'.format(self.id)
+
+    def get_arrival(self):
+        date = self.created + timedelta(days=30)
+        return date.date()
 
     def get_total_cost(self):
         return sum(item.get_total_cost() for item in self.items.all())
@@ -48,3 +54,9 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+    def get_total_cost(self):
+        return self.price * self.quantity
+
+    def get_image_url(self):
+        return self.product.image.url

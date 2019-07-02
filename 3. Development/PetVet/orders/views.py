@@ -7,12 +7,10 @@ from cart.cart import Cart
 
 def orders_list(request):
     if request.user.is_authenticated:
-        orders = Order.objects.all()
+        orders = Order.objects.filter(user=request.user)
         return render(request, 'orders/list.html', {'orders': orders})
     else:
         return redirect('/login')
-
-
 
 def order_create(request):
     cart = Cart(request)

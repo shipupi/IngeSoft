@@ -97,13 +97,6 @@
                 <form action="{% url "orders:order_create" %}" method="post">
                     {% csrf_token %}
                     <div class="flex-w flex-r bo10 p-t-15 p-b-20">
-                        <span class="s-text18 w-size19 w-full-sm">
-                            Shipping:
-                        </span>
-                        <span class="m-text21 w-size20 w-full-sm r-text">
-                            +$9.00
-                        </span>
-
                         <div class="w-size20 w-full-sm r">
                             <div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden m-t-8 m-b-12">
                                 {{form.address}}
