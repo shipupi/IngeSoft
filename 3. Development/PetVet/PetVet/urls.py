@@ -18,10 +18,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from products import views as products_views
-from .views import login_page, register_page, register_complete_page, cart_page
+from .views import *
 
 urlpatterns = [
-	path('', login_page, name='login_page'),
+	path('login/', login_page, name='login_page'),
 	path('registration/', register_page, name='register_page'),
 	path('registration-complete/', register_complete_page, name='register_complete_page'),
 	path('admin/', admin.site.urls, name='admin'),

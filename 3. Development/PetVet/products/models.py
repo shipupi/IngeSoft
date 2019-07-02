@@ -21,8 +21,9 @@ class Category(models.Model):
         return reverse('products:product_list_by_category', args=[self.slug])
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products',
-            on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, related_name='products')
+    # category = models.ForeignKey(Category, related_name='products',
+    #         on_delete=models.CASCADE)
     name = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
     description = models.TextField(blank=True)
@@ -31,7 +32,7 @@ class Product(models.Model):
     stock =models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to="images/", blank=True)
+    image = models.ImageField(upload_to="product/%Y/%m/%d/", blank=True)
 
     class Meta:
         ordering = ('name',)

@@ -1,5 +1,4 @@
 #Don't track content of these folders
-
 3.\ Development/PetVet/catalog/tests/__pycache__/*
 3.\ Development/PetVet/PetVet/__pycache__/*
 3.\ Development/PetVet/products/__pycache__/*
@@ -9,6 +8,13 @@
 3.\ Development/PetVet/orders/__pycache__/*
 3.\ Development/PetVet/orders/migrations/__pycache__/*
 
+3.\ Development/PetVet/catalog/tests/__pycache__
+3.\ Development/PetVet/PetVet/__pycache__/
+3.\ Development/PetVet/products/__pycache__/
+3.\ Development/PetVet/cart/__pycache__/
+3.\ Development/PetVet/products/migrations/
+3.\ Development/PetVet/cart/migrations/
+3.\ Development/PetVet/images
 
 
 #Compiled source#
