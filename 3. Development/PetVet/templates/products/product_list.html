@@ -16,15 +16,27 @@
 					</h4>
 					<ul class="p-b-54">
 						<li class="p-t-4">
-							<a href="#" class="s-text13 active1">
+                            {% if category is None %}
+							<a href="#" class="s-text13 active1" style="font-weight:bold;">
 								All
 							</a>
-						</li>
-						{% for category in categories %}
-						<li class="p-t-4">
-							<a href="/{{category.slug}}" class="s-text13">
-								{{category.name|capfirst}}
+                            {% else %}
+                            <a href="#" class="s-text13">
+								All
 							</a>
+                            {% endif %}
+						</li>
+						{% for cat in categories %}
+						<li class="p-t-4">
+                            {% if  cat  == category %}
+                            <a href="/{{cat.slug}}" class="s-text13-active1" style="font-weight:bold;">
+								{{cat.name|capfirst}}
+							</a>
+                            {% else %}
+							<a href="/{{cat.slug}}" class="s-text13">
+								{{cat.name|capfirst}}
+							</a>
+                            {% endif %}
 						</li>
 						{% endfor %}
 					</ul>
