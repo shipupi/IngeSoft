@@ -83,8 +83,6 @@ class OrdersViewTest(TestCase):
         s = self.session
         s[settings.CART_SESSION_ID] = self.test_cart.cart
         s.save()
-        print(self.client.session[settings.CART_SESSION_ID])
-
 
     """
     A GET to the create_order view uses the appropriate
