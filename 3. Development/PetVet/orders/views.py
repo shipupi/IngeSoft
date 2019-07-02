@@ -16,13 +16,14 @@ def orders_list(request):
 
 def order_create(request):
     cart = Cart(request)
+    form = OrderCreateForm(request.POST)
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('/login')
-        form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
-            order.user.add(*[request.user])
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
             for item in cart:
                 OrderItem.objects.create(
                     order=order,
@@ -31,7 +32,8 @@ def order_create(request):
                     quantity=item['quantity']
                 )
             cart.clear()
-        return redirect('/orders')
-
-    else:
-        return redirect('/cart')
+            return redirect('/orders')
+        else:
+            print('invalid form')
+            return render(request, "cart/detail.html", {'form': form, 'cart': cart})
+    return redirect('/cart')
