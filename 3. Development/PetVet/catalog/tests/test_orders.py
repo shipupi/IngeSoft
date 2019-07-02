@@ -56,6 +56,11 @@ class OrdersViewTest(TestCase):
         cls.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("200"), available=True, stock=1, created_at=datetime.datetime.now())
         cls.product1.categories.add(category)
         cls.product2.categories.add(category)
+
+        # Creating user for order_list
+        cls.username = "Test User"
+        cls.password = "Tis a secret"
+        User.objects.create_user(username=cls.username, password=cls.password)
         
 
     def setUp(self):
@@ -83,18 +88,20 @@ class OrdersViewTest(TestCase):
         s = self.session
         s[settings.CART_SESSION_ID] = self.test_cart.cart
         s.save()
-        print(self.client.session[settings.CART_SESSION_ID])
 
+    # ------------- Order Create View -------------- #
 
     """
     A GET to the create_order view uses the appropriate
     template and populates the OrderCreateForm into context in 'form'.
+    Also redirects to cart
     """
     def test_order_create_view_get(self):
     	response = self.client.get(reverse('orders:order_create'))
     	self.assertEqual(response.status_code, 200)
     	self.assertTemplateUsed(response,'orders/form.html')
     	self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
+        self.assertRedirects(response, '/cart')
 
     """
     A POST to the create_order view with invalid form data
@@ -105,6 +112,7 @@ class OrdersViewTest(TestCase):
     	    response = self.client.post(reverse('orders:order_create'), invalid_data)
     	    self.assertEqual(response.status_code, 200)
     	    self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
+            self.assertRedirects(response, '/orders')
 
     """  
     A POST of valid data with a non empty cart creates the correct OrderItem
@@ -153,3 +161,38 @@ class OrdersViewTest(TestCase):
         self.assertTrue(orderItem2.product == self.product2)
         self.assertTrue(orderItem2.price == Decimal("200"))
         self.assertTrue(orderItem2.quantity == 2)
+
+    # ------------- Order List View -------------- #
+
+    """
+    A GET to the order_list view with an authenticated user uses the appropriate
+    template and order is empty since there are no existing orders
+    """
+    def test_empty_order_list_with_user_authenticated(self):
+        self.client.login(username = self.username, password = self.password)
+        response = self.client.get(reverse('orders_list'))
+        self.assertEqual(list(response.orders), list())
+        self.assertTemplateUsed(response,'orders/list.html')
+    
+    """
+    A GET to the order_list view with an authenticated user uses the appropriate
+    template and order is NOT empty, it contains the existing Orders which is the
+    one created in create_order
+    """
+    def test_non_empty_order_list_with_user_authenticated(self):
+        self.client.login(username = self.username, password = self.password)
+        # Will create an order
+        data = valid_form_data[0]
+        postResponse = self.client.post(reverse('orders:order_create'), data)
+     
+        getResponse = self.client.get(reverse('orders_list'))
+        self.assertEqual(list(response.orders), list(Order.objects.all()))
+        self.assertEqual(len(list(response.orders)), 1)
+
+    """
+    A GET to the order_list view with a non authenticated user 
+    ridirects the user to the login page
+    """
+    def test_order_list_with_user_not_authenticated(self):
+        response = self.client.get(reverse('orders_list'))
+        self.assertRedirects(response, reverse('login_page'))

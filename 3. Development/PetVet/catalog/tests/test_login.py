@@ -73,8 +73,7 @@ class LoginTest(TestCase):
 
         # If the user exists, should redirect me to the home page
         if(userExists == True):
-            print("TO BE IMPLEMENTED")
-            #self.assertRedirects(response, reverse('home_page'))        
+            self.assertRedirects(response, '/')        
 
     # Will delete all the users created in setUpClass
     @classmethod

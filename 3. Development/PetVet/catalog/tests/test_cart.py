@@ -226,5 +226,3 @@ class CartViewTest(TestCase):
     def test_cart_remove_product_view_redirect_404(self):
         response = self.client.post(reverse('cart:cart_add', kwargs={'product_id':100}))
         self.assertEqual(response.status_code, 404)
-
-
