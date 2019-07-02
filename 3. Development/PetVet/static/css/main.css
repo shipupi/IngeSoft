@@ -186,7 +186,9 @@ iframe {
   outline: none !important;
 }
 
-
+body {
+  min-width: 380px;
+}
 
 
 
@@ -2055,7 +2057,6 @@ li.sale-noti > a {
 .table-shopping-cart {
   border-collapse: collapse;
   width: 100%;
-  min-width: 992px;
 }
 
 .table-shopping-cart .table-row {
@@ -2064,21 +2065,15 @@ li.sale-noti > a {
 }
 
 .table-shopping-cart .column-1 {
-  width: 225px;
-  padding-left: 50px;
 }
 .table-shopping-cart .column-2 {
-  width: 330px;
-  padding-right: 30px;
 }
 .table-shopping-cart .column-3 {
-  width: 133px;
   padding-right: 30px;
 }
 .table-shopping-cart .column-4 {
-  width: 355px;
-  padding-right: 30px;
 }
+
 .table-shopping-cart .column-5 {
   padding-right: 30px;
 }

@@ -3423,6 +3423,10 @@ TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT
 	text-transform: uppercase;
 }
 
+.r-text{
+	text-align: right;
+}
+
 
 /*[ Color ]
 ///////////////////////////////////////////////////////////
@@ -4136,4 +4140,12 @@ RESPONSIVE  RESPONSIVE  RESPONSIVE  RESPONSIVE   RESPONSIVE
 	.respon4 {
 		width: 100%;
 	}
+}
+
+.block {
+	display: inline-block;
+}
+
+.r{
+	text-align: right;
 }
