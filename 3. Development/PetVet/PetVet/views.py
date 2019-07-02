@@ -49,10 +49,11 @@ def register_page(request):
         new_user = User.objects.create_user(username=username, email=email,
                 password=password)
         print(new_user)
-        
+        login(request, new_user)
         # Redirect the user to the registration complete page
-        return redirect(reverse('register_complete_page'))
-
+        return redirect('/')
+    else:
+        print('invalid form')
     return render(request, "auth/register.html", context)
 
 #------------- REGISTRATION COMPLETE ----------------#

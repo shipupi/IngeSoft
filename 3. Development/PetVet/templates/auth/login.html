@@ -8,9 +8,17 @@
 </head>
 
   <body>
-    <form class="form-signin" method="POST">{% csrf_token %}
+    <form class="form-signin" action="{% url 'login_page' %}" method="POST">
+      {% csrf_token %}
       <div class="text-center mb-4">
         <img class="mb-4" src="{% static "images/petvet.svg" %}" alt="PetVet">
+          {% if form.non_field_errors %}
+            <div class="non-field-errors">
+              {% for err in form.non_field_errors %}
+                <p class="alert alert-danger">{{ err }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
            {% for message in messages %}
 
             <div class="alert alert-danger">
