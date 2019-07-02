@@ -46,7 +46,7 @@ class ProductTest(TestCase):
         self.assertTemplateUsed(response,'products/product_list.html')
         self.failUnless(isinstance(response.context['category'], Category))
         self.assertEqual(list(response.context['categories']), list(Category.objects.all()))
-        self.assertEqual(list(response.context['products']), list(Product.objects.filter(category=response.context['category'])))
+        self.assertEqual(list(response.context['products']), list(Product.objects.filter(categories=response.context['category'])))
 
     """
     A GET to the product list view with an existing category slug which was never used on a product
