@@ -4,14 +4,16 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control sizefull s-text7", 'placeholder': "Username"}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': 'true', 'class': "form-control sizefull s-text7", 'placeholder': "Username"}))
     password = forms.CharField(widget=forms.TextInput(attrs={'type': "password", 'class': "form-control sizefull s-text7", 'placeholder': "Password"}))
+    error_css_class = 'alert alert-danger'
 
 class RegisterForm(forms.Form):
     username = forms.CharField(
             widget=forms.TextInput(
                 attrs={
-                    "class": "form-control",
+                    'autofocus': 'true',
+                    'class': "form-control sizefull s-text7",
                         "id": "log_full_name",
                         "placeholder": "Your full name"
                 })
@@ -19,7 +21,7 @@ class RegisterForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(
                 attrs={
-                    "class": "form-control",
+                    'class': "form-control sizefull s-text7",
                         "id": "log_pass_name",
                         "placeholder": "Your password"
                 })
@@ -28,7 +30,7 @@ class RegisterForm(forms.Form):
     password2 = forms.CharField(
         widget=forms.PasswordInput(
                 attrs={
-                    "class": "form-control",
+                    'class': "form-control sizefull s-text7",
                         "id": "log_pass2",
                         "placeholder": "Please renter your password"
                 })
@@ -38,7 +40,7 @@ class RegisterForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(
                 attrs={
-                    "class": "form-control",
+                    'class': "form-control sizefull s-text7",
                         "id": "log_user_name",
                         "placeholder": "Your email"
                 })
