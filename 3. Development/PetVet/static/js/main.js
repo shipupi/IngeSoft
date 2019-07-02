@@ -215,6 +215,12 @@
         minimumResultsForSearch: 20,
         dropdownParent: $('#dropDownSelect1')
     });
+    $('.btn-addcart-product-detail').each(function(){
+        var nameProduct = $('.product-detail-name').html();
+        $(this).on('click', function(){
+            swal(nameProduct, "is added to wishlist !", "success");
+        });
+    });
 })(jQuery);
 
 $(document).ready(function(){
@@ -224,13 +230,6 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-
-
-    $(".selection-1").select2({
-        minimumResultsForSearch: 20,
-        dropdownParent: $('#dropDownSelect1')
-    });
-
     $(".selection-2").select2({
         minimumResultsForSearch: 20,
         dropdownParent: $('#dropDownSelect2')
