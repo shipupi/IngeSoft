@@ -150,7 +150,7 @@
 
                 <div class="size15 trans-0-4">
                     <!-- Button -->
-                    <form action="{% url "orders:order_create" %}" method="post">
+                    <form action="action="{{ form.path }}" method="post">
                         {% csrf_token %}
                         <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
                             Proceed to Checkout
