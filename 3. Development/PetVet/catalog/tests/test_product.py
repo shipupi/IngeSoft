@@ -14,8 +14,10 @@ class ProductTest(TestCase):
         cls.category2 = Category.objects.create(name='C2', slug='c2')
 
     def setUp(self):
-        self.product1 = Product.objects.create(category=self.category, name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
-        self.product2 = Product.objects.create(category=self.category, name="Prod2", slug="p2", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
+        self.product1 = Product.objects.create(name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=)
+        self.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image="")
+        self.product1.categories.add(self.category)
+        self.product2.categories.add(self.category)
 
     """
     A GET to the product list view with no slug uses the appropriate
@@ -77,4 +79,3 @@ class ProductTest(TestCase):
         # Incorrect slug
         response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':'incorrect-slug'}))
         self.assertEqual(response.status_code, 404)
-

@@ -57,7 +57,7 @@ class RegistrationTest(TestCase):
         response = self.client.get(reverse('register_page'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'auth/view.html')
+                                'auth/register.html')
         self.failUnless(isinstance(response.context['form'],
                                    forms.RegisterForm))
 
@@ -112,4 +112,5 @@ for behaviour, test_cases in test_case_data_invalid_registration.items():
         test_name = "test_{0}_{1}_{2}_{3}".format(behaviour, username, password1, email)
         registration_test_case = registration_test_template(*invalid_registration_data)
         setattr(RegistrationTest, test_name, registration_test_case);
+
 

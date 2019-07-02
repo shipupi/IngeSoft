@@ -56,7 +56,7 @@ class LoginTest(TestCase):
         response = self.client.get(reverse('login_page'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'auth/view.html')
+                                'auth/login.html')
         self.failUnless(isinstance(response.context['form'],
                                    forms.LoginForm))
 
@@ -92,4 +92,3 @@ for behaviour, test_cases in test_case_data_login.items():
         test_name = "test_{0}_{1}_{2}".format(behaviour, username, password)
         login_test_case = login_test_template(*login_data)
         setattr(LoginTest, test_name, login_test_case);
-
