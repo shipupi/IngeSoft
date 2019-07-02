@@ -1,11 +1,13 @@
+import os
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.conf import settings
 from django.test import TestCase
-from products.models import Product, Category
 from django.urls import reverse
-from decimal import Decimal
+
 import datetime
-
+from decimal import Decimal
 from products import urls
-
+from products.models import Product, Category
 
 class ProductTest(TestCase):
     @classmethod
@@ -14,8 +16,11 @@ class ProductTest(TestCase):
         cls.category2 = Category.objects.create(name='C2', slug='c2')
 
     def setUp(self):
-        self.product1 = Product.objects.create(name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=)
-        self.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image="")
+        img_path = os.path.join(settings.BASE_DIR, 'static/images/item-01.jpg')
+        test_photo = SimpleUploadedFile(name='test_image.jpg', content=open(img_path, 'rb').read(), content_type='image/jpeg')
+        
+        self.product1 = Product.objects.create(name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
+        self.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
         self.product1.categories.add(self.category)
         self.product2.categories.add(self.category)
 
