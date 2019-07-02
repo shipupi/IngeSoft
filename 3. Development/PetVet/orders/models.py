@@ -9,12 +9,12 @@ from products.models import Product
 from django.contrib.auth import get_user_model
 User = get_user_model()
 class Order(models.Model):
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
+    first_name = models.CharField(max_length=60, default="")
+    last_name = models.CharField(max_length=60, default="")
     email = models.EmailField()
-    address = models.CharField(max_length=150)
-    postal_code = models.CharField(max_length=30)
-    city = models.CharField(max_length=100)
+    address = models.CharField(max_length=150, default="")
+    postal_code = models.CharField(max_length=30, default="")
+    city = models.CharField(max_length=100, default="")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     cc_number = CardNumberField('card number', default='0000000000000000')
