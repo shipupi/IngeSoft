@@ -23,6 +23,7 @@ def login_page(request):
             #success page
             login(request, user)
             context['form'] = LoginForm()
+            context.update( {'user' : user})
             return redirect('/')
         else:
             #failure page
