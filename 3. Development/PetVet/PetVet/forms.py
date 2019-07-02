@@ -60,6 +60,9 @@ class RegisterForm(forms.Form):
         if password2 != password:
             raise forms.ValidationError("Passwords don't match")
 
+        if email is None:
+            raise forms.ValidationError("Invalid email")
+            return data
         if not "gmail.com" in email:
             raise forms.ValidationError("Email has to be gmail")
 
