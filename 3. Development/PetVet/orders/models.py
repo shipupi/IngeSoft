@@ -2,8 +2,12 @@ from django.db import models
 from creditcards.models import CardNumberField, CardExpiryField
 from creditcards.models import SecurityCodeField
 # Create your models here.
+from django.contrib.auth.models import User
 from products.models import Product
 
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
 class Order(models.Model):
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=60)
@@ -17,6 +21,9 @@ class Order(models.Model):
     cc_expiry = CardExpiryField('expiration date', default="01/01")
     cc_code = SecurityCodeField('security code', default ='000')
     paid = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 
 
     class Meta:
