@@ -6,7 +6,7 @@ import datetime
 
 from orders import urls
 from orders import forms
-from orders.models import OrderItem
+from orders.models import OrderItem, Order
 from orders.forms import OrderCreateForm
 from cart.cart import Cart
 from products.models import Product, Category
@@ -52,7 +52,7 @@ class OrdersViewTest(TestCase):
         cls.request = RequestFactory()
         cls.request.user = AnonymousUser()
         cls.request.session ={}
-        cls.cartObj = Cart(cls.request)
+        cls.test_cart = Cart(cls.request)
 
         #Creating the products
         category = Category.objects.create(name='C1', slug='c1')
@@ -62,9 +62,11 @@ class OrdersViewTest(TestCase):
         cls.product2.categories.add(category)
        
         # Adding products to the cart
-        cls.cartObj.add(cls.product1, quantity=1)
-        cls.cartObj.add(cls.product2, quantity=2)
-
+        #cls.test_cart.add(cls.product1, quantity=1)
+        #cls.test_cartt.add(cls.product2, quantity=2)
+        cls.order = Order.objects.create()
+        cls.order_item_1 = OrderItem.objects.create(order=cls.order, product=cls.product1, price=cls.product1.price, quantity=1)
+        cls.order_item_2 = OrderItem.objects.create(order=cls.order, product=cls.product2, price=cls.product2.price, quantity=1)
 
     def setUp(self):
     	self.client = Client()
@@ -89,16 +91,18 @@ class OrdersViewTest(TestCase):
     	    self.assertEqual(response.status_code, 200)
     	    self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
 
-
-    """ NO SE COMO PASARLE EL REQUEST QUE CREE EN setUpTestData PORQUE ESE CONTIENE EL CART CON LAS COSAS
-        ENTONCES AL TENER LA MISMA SECCION ME VA A DEVOLVER ESE MISMO CARRITO """
-
-    def test_order_items_created_on_valid_form(self):
+    """  """
+    def test_proper_redirects_to_order_create(self):
     	data = valid_form_data[0]
     	response = self.client.post(reverse('orders:order_create'), data)	
     	self.assertEqual(response.status_code, 200)
 
-    	# There were two products in the cart, checking if both where created into OrderItem
+    def test_order_items_created_on_valid_form(self):
+    	# There were two products in the cart, checking if both OrderItem were created properly
     	self.assertEqual(OrderItem.objects.count(), 2)
-    	self.assertTrue(OrderItem.objects.filter(product=cls.product1).exists())  #Returns True if the QuerySet is not empty
-    	self.assertTrue(OrderItem.objects.filter(product=cls.product2).exists())  #Returns True if the QuerySet is not empty
+    	self.assertTrue(OrderItem.objects.filter(product=self.product1).exists())  #Returns True if the QuerySet is not empty
+    	self.assertTrue(OrderItem.objects.filter(product=self.product2).exists())  #Returns True if the QuerySet is not empty
+    
+    def test_order_contains_created_order_items(self):
+        self.assertTrue(self.order_item_1.order==self.order)
+        self.assertTrue(self.order_item_2.order==self.order)

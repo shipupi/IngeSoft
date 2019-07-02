@@ -14,7 +14,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     cc_number = CardNumberField('card number', default='0000000000000000')
-    cc_expiry = CardExpiryField('expiration date', default="00/0000")
+    cc_expiry = CardExpiryField('expiration date', default="01/01")
     cc_code = SecurityCodeField('security code', default ='000')
     paid = models.BooleanField(default=False)
 
