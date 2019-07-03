@@ -21,8 +21,11 @@ def product_list(request, slug=None):
         category = get_object_or_404(Category, slug=slug)
         products = category.products.all()
     else:
-        products = Product.objects.filter(available=True, price__lte=price_max,
+        products = Product.objects.all()
+
+    products = products.filter(available=True, price__lte=price_max,
                 price__gte=price_min)
+
     if search:
         products = products.filter(available=True, price__lte=price_max,
             price__gte=price_min, name__icontains=search)
