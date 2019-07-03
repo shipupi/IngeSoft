@@ -11,14 +11,14 @@ def orders_list(request):
         orders = Order.objects.filter(user=request.user)
         return render(request, 'orders/list.html', {'orders': orders})
     else:
-        return redirect(reverse('login_page)'))
+        return redirect(reverse('login_page'))
 
 def order_create(request):
     cart = Cart(request)
     form = OrderCreateForm(request.POST)
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return redirect(reverse('login_page)'))
+            return redirect(reverse('login_page'))
         if form.is_valid():
             order = form.save(commit=False)
             order.user = request.user
