@@ -1,18 +1,14 @@
+{% extends 'base/base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% block title %}
+    404 Error
+{% endblock %}
 
-    
+{% block content %}
+<!-- Content page -->
+  <h1>404 Not Found</h1>
+  <h4>We're sorry, we couldn't find the page you're looking for</h4>
+{% endblock %}
 
-    <title>Error 404-Page not found</title>
-  </head>
-  <body class="animsition"> 
-    {% block content %}{% endblock %}
-  </body>
-</html>
 
-<!-- Si queres que funcione hay que cambiar settings con los comments que tiene en Debug -->
+<!-- Currently, DEBUG = True in settings-->
