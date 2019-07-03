@@ -236,25 +236,5 @@ $(document).ready(function(){
     });
     
 
-    /*[ No ui ]
-    of-hiddenof-hidden===========================================================*/
-     filterBar = document.getElementById('filter-bar');
-
-    noUiSlider.create(filterBar, {
-    start: [ 0, 1000 ],
-    connect: true,
-    range: {
-    'min': 0,
-    'max': 1000
-    }
-    });
-
-    var skipValues = [
-    document.getElementById('value-lower'),
-    document.getElementById('value-upper')
-    ];
-
-    filterBar.noUiSlider.on('update', function( values, handle ) {
-    skipValues[handle].innerHTML = Math.round(values[handle]) ;
-    });
+    
 });
