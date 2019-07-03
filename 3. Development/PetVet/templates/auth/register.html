@@ -4,14 +4,14 @@
   <head>
     {% include 'base/head/_head.html' %}
     <link href="{% static "css/floating-labels.css" %}"  rel="stylesheet">
-    <title>Home</title>
+    <title>Join the Club!</title>
 </head>
 
   <body>
     <form class="form-signin" action="{{ form.path }}" method="POST">{% csrf_token %}
       <div class="text-center mb-4">
         <img class="mb-4" src="{% static "images/petvet.svg" %}" alt="PetVet">
-        <h1 class="h3 mb-3 font-weight-normal"><strong>Welcome Back!</strong></h1>
+        <h1 class="h3 mb-3 font-weight-normal"><strong>Join the Club!</strong></h1>
       </div>
       {% if form.non_field_errors %}
         <div class="non-field-errors">
