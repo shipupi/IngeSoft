@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,6 +6,7 @@ from .forms import LoginForm, RegisterForm
 from django.contrib import messages
 
 #---------------------- LOGIN ------------------------#
+
 def login_page(request):
     login_form = LoginForm(request.POST or None)
     context = {
@@ -56,6 +57,9 @@ def register_page(request):
         print('invalid form')
     return render(request, "auth/register.html", context)
 
+def logout_page(request):
+    logout(request)
+    return redirect("/")
 #------------- REGISTRATION COMPLETE ----------------#
 def register_complete_page(request):
     template = 'auth/register_complete.html'
