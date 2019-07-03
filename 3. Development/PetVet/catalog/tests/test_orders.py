@@ -94,6 +94,10 @@ class OrdersViewTest(TestCase):
         s[settings.CART_SESSION_ID] = self.test_cart.cart
         s.save()
 
+        # Loggin in client
+        self.client.login(username = self.username, password = self.password)
+
+
     # ------------- Order Create View -------------- #
 
     """
@@ -158,16 +162,27 @@ class OrdersViewTest(TestCase):
         self.assertTrue(orderItem1.order.paid == form.paid)
 
         self.assertTrue(orderItem1.product == self.product1)
-        self.assertTrue(orderItem1.price == Decimal("100"))
-        self.assertTrue(orderItem1.quantity == 1)
-        self.assertTrue(orderItem1.get_cost() == orderItem1.get_total_cost())
+        self.assertEqual(orderItem1.price, Decimal("100"))
+        self.assertEqual(orderItem1.quantity, 1)
+        self.assertEqual(orderItem1.get_total_cost(), Decimal("100"))
         
         # Verifying orderItem2
         self.assertEqual(orderItem2.order, orderItem1.order)
         self.assertTrue(orderItem2.product == self.product2)
-        self.assertTrue(orderItem2.price == Decimal("200"))
-        self.assertTrue(orderItem2.quantity == 2)
-        self.assertTrue(orderItem2.get_total_cost() == Decimal("400"))
+        self.assertEqual(orderItem2.price, Decimal("200"))
+        self.assertEqual(orderItem2.quantity, 2)
+        self.assertEqual(orderItem2.get_total_cost(), Decimal("400"))
+
+
+    def test_correct_data_in_the_order(self):
+        data = valid_form_data[0]
+        response = self.client.post(reverse('orders:order_create'), data)
+        
+        orderItem1 = OrderItem.objects.get(product=self.product1)
+        order = orderItem1.order
+
+        self.assertEqual(order.get_total_cost(), Decimal("500"))
+        self.assertEqual(list(order.get_items()), list(OrderItem.objects.filter(order=response.context['order'])))
 
 
     # ------------- Order List View -------------- #
@@ -202,5 +217,7 @@ class OrdersViewTest(TestCase):
     ridirects the user to the login page
     """
     def test_order_list_with_user_not_authenticated(self):
+        self.client.logout()
         response = self.client.get(reverse('orders:orders_list'))
-        self.assertRedirects(response, reverse('login_page'))
+        self.assertEqual(response.status_code, 302)     #Must go to the login page before accessing requested resource
+
