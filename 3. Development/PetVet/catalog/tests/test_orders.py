@@ -1,10 +1,12 @@
 from django.test import TestCase, Client, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser, User
 from django.urls import reverse
 from decimal import Decimal
 import datetime
 from django.conf import settings
 from importlib import import_module
+from django.core.files.uploadedfile import SimpleUploadedFile
+import os
 
 from orders import urls
 from orders import forms
@@ -51,9 +53,12 @@ class OrdersViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):   
         #Creating the products
+        img_path = os.path.join(settings.BASE_DIR, 'static/images/item-01.jpg')
+        test_photo = SimpleUploadedFile(name='test_image.jpg', content=open(img_path, 'rb').read(), content_type='image/jpeg')
+        
         category = Category.objects.create(name='C1', slug='c1')
-        cls.product1 = Product.objects.create(name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
-        cls.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("200"), available=True, stock=1, created_at=datetime.datetime.now())
+        cls.product1 = Product.objects.create(name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
+        cls.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("200"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
         cls.product1.categories.add(category)
         cls.product2.categories.add(category)
 
@@ -97,10 +102,10 @@ class OrdersViewTest(TestCase):
     Also redirects to cart
     """
     def test_order_create_view_get(self):
-    	response = self.client.get(reverse('orders:order_create'))
-    	self.assertEqual(response.status_code, 200)
-    	self.assertTemplateUsed(response,'orders/form.html')
-    	self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
+        response = self.client.get(reverse('orders:order_create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'orders/form.html')
+        self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
         self.assertRedirects(response, '/cart')
 
     """
@@ -108,10 +113,10 @@ class OrdersViewTest(TestCase):
     populates the OrderCreateForm into context in 'form'.
     """
     def test_order_create_view_invalid_form_post(self):
-    	for invalid_data in invalid_form_data:
-    	    response = self.client.post(reverse('orders:order_create'), invalid_data)
-    	    self.assertEqual(response.status_code, 200)
-    	    self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
+        for invalid_data in invalid_form_data:
+            response = self.client.post(reverse('orders:order_create'), invalid_data)
+            self.assertEqual(response.status_code, 200)
+            self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
             self.assertRedirects(response, '/orders')
 
     """  
@@ -170,7 +175,7 @@ class OrdersViewTest(TestCase):
     """
     def test_empty_order_list_with_user_authenticated(self):
         self.client.login(username = self.username, password = self.password)
-        response = self.client.get(reverse('orders_list'))
+        response = self.client.get(reverse('orders:orders_list'))
         self.assertEqual(list(response.orders), list())
         self.assertTemplateUsed(response,'orders/list.html')
     
@@ -185,14 +190,14 @@ class OrdersViewTest(TestCase):
         data = valid_form_data[0]
         postResponse = self.client.post(reverse('orders:order_create'), data)
      
-        getResponse = self.client.get(reverse('orders_list'))
-        self.assertEqual(list(response.orders), list(Order.objects.all()))
-        self.assertEqual(len(list(response.orders)), 1)
+        getResponse = self.client.get(reverse('orders:orders_list'))
+        self.assertEqual(list(getResponse.orders), list(Order.objects.all()))
+        self.assertEqual(len(list(getResponse.orders)), 1)
 
     """
     A GET to the order_list view with a non authenticated user 
     ridirects the user to the login page
     """
     def test_order_list_with_user_not_authenticated(self):
-        response = self.client.get(reverse('orders_list'))
+        response = self.client.get(reverse('orders:orders_list'))
         self.assertRedirects(response, reverse('login_page'))
