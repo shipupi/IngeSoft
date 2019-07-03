@@ -20,11 +20,11 @@
 					<ul class="p-b-54">
 						<li class="p-t-4">
                             {% if category is None %}
-							<a href="#" class="s-text13 active1" style="font-weight:bold;">
+							<a onclick="window.location='/'" class="s-text13 active1" style="font-weight:bold;">
 								All
 							</a>
                             {% else %}
-                            <a href="#" class="s-text13">
+                            <a onclick="window.location='/'+window.location.search" href="#"  class="s-text13">
 								All
 							</a>
                             {% endif %}
@@ -32,11 +32,11 @@
 						{% for cat in categories %}
 						<li class="p-t-4">
                             {% if  cat  == category %}
-                            <a href="/{{cat.slug}}" class="s-text13-active1" style="font-weight:bold;">
+                            <a onclick="window.location='/{{cat.slug}}'+window.location.search" href="#" class="s-text13-active1" style="font-weight:bold;">
 								{{cat.name|capfirst}}
 							</a>
                             {% else %}
-							<a href="/{{cat.slug}}" class="s-text13">
+							<a onclick="window.location='/{{cat.slug}}'+window.location.search" href="#" class="s-text13">
 								{{cat.name|capfirst}}
 							</a>
                             {% endif %}
