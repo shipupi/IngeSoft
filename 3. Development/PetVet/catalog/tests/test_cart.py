@@ -1,13 +1,17 @@
-from django.test import TestCase, RequestFactory, Client
-from django.contrib.auth.models import User, AnonymousUser
-from django.urls import reverse
-from decimal import Decimal
+import os
 import datetime
 
+from django.conf import settings
+from django.contrib.auth.models import User, AnonymousUser
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, RequestFactory, Client
+from django.urls import reverse
+
+from cart import urls
 from cart.cart import Cart
 from cart.forms import CartAddProductForm
+from decimal import Decimal
 from products.models import Product, Category
-from cart import urls
 
 class CartWithProductTest(TestCase):
     @classmethod
@@ -187,7 +191,11 @@ class CartViewTest(TestCase):
         self.request = RequestFactory()
         self.request.user = AnonymousUser()
         self.request.session = {}
-        self.product = Product.objects.create(name="Prod Name", slug="slug", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now())
+
+        img_path = os.path.join(settings.BASE_DIR, 'static/images/item-01.jpg')
+        test_photo = SimpleUploadedFile(name='test_image.jpg', content=open(img_path, 'rb').read(), content_type='image/jpeg')
+        
+        self.product = Product.objects.create(name="Prod Name", slug="slug", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
         self.product.categories.add(self.category)
     """
     A GET to the cart detail view uses the appropriate
@@ -204,7 +212,7 @@ class CartViewTest(TestCase):
     """
     def test_cart_add_view_redirect(self):
         response = self.client.post(reverse('cart:cart_add', kwargs={'product_id':self.product.id}), data={'quantity':10})
-        #self.assertRedirects(response, reverse('cart:cart_detail'))
+        self.assertRedirects(response, reverse('cart:cart_detail'))
 
     """
     A POST to the cart add product view with invalid product data redirects 404 status erorr page.
