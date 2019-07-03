@@ -95,6 +95,8 @@ body, html {
   font-weight: 400;
 }
 
+
+
 /* ------------------------------------ */
 a {
 	font-family: Montserrat-Regular;
@@ -620,6 +622,16 @@ body {
   -o-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
+}
+
+.wrap_header_mobile {
+  background-color: cornsilk !important;
+  background-image: url("../images/icons/header-background.png") ;
+  box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
+  -o-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2);
+  -ms-box-shadow: 0 1px 5px 0px rgba(0,0,0,0.2); 
 }
 
 .fixed-header .wrap_header {
