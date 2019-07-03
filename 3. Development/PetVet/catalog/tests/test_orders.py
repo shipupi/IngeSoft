@@ -107,7 +107,7 @@ class OrdersViewTest(TestCase):
     """
     def test_order_create_view_get(self):
         response = self.client.get(reverse('orders:order_create'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('cart:cart_detail'))
 
     """
@@ -128,7 +128,7 @@ class OrdersViewTest(TestCase):
     def test_order_items_created_on_valid_form(self):
         data = valid_form_data[0]
         response = self.client.post(reverse('orders:order_create'), data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(OrderItem.objects.count(), 2)
         self.assertTrue(OrderItem.objects.filter(product=self.product1).exists())  #Returns True if the QuerySet is not empty
         self.assertTrue(OrderItem.objects.filter(product=self.product2).exists())  #Returns True if the QuerySet is not empty
@@ -171,7 +171,9 @@ class OrdersViewTest(TestCase):
         self.assertEqual(orderItem2.quantity, 2)
         self.assertEqual(orderItem2.get_total_cost(), Decimal("400"))
 
-
+    """  
+    Testing the get_total_cost and get_items methods of Order
+    """
     def test_correct_data_in_the_order(self):
         data = valid_form_data[0]
         response = self.client.post(reverse('orders:order_create'), data)
@@ -180,7 +182,7 @@ class OrdersViewTest(TestCase):
         order = orderItem1.order
 
         self.assertEqual(order.get_total_cost(), Decimal("500"))
-        self.assertEqual(list(order.get_items()), list(OrderItem.objects.filter(order=response.context['order'])))
+        self.assertEqual(list(order.get_items()), list(OrderItem.objects.filter(order=order)))
 
 
     # ------------- Order List View -------------- #
