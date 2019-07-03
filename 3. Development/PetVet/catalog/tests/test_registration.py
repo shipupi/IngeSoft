@@ -75,7 +75,7 @@ class RegistrationTest(TestCase):
         response = self.client.post(reverse('register_page'), data)  
                                 
         # Upon success will redirect to the registration_complete page
-        self.assertRedirects(response, reverse('register_complete_page'))
+        self.assertRedirects(response, '/')
     
     """
     A POST to the register view with an existing username does not
