@@ -55,7 +55,7 @@
 						</a>
 						{% else %}
 						<a href="/logout" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Logout">
-							<img src="{% static "images/icons/door.png" class="header-%}" icon1" alt="ICON">
+							<img src="{% static "images/icons/door-back.png" class="header-%}" icon1" alt="ICON">
 						</a>
 						{% endif %}
 					</div>
@@ -73,13 +73,12 @@
 		<div class="btn-show-menu">
 			<!-- Header Icon mobile -->
 			<div class="header-icons-mobile">
+	            {% if not request.user.is_anonymous %}
 	            <p>{{ user }}</p>
 				<span class="divide1"></span>
-				<a href="#" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Account">
-					<img src="{% static "images/icons/icon-header-01.png" class="header-%}" icon1" alt="ICON">
-				</a>
-
+				<img src="{% static "images/icons/icon-header-01.png" class="header-%}" icon1" alt="ICON">
 				<span class="linedivide1"></span>
+				{% endif %}
 
 				<a href="/orders" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Orders">
 					<img src="{% static "images/icons/icon-header-03.png" class="header-%}" icon1" alt="ICON">
@@ -91,6 +90,18 @@
 					<img src="{% static "images/icons/icon-header-02.png" class="header-%}" icon1" alt="ICON">
 					<span class="header-icons-noti">0</span>
 				</a>
+
+				<span class="linedivide1"></span>
+
+				{% if request.user.is_anonymous %}
+				<a href="/login" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Login">
+					<img src="{% static "images/icons/door.png" class="header-%}" icon1" alt="ICON">
+				</a>
+				{% else %}
+				<a href="/logout" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Logout">
+					<img src="{% static "images/icons/door-back.png" class="header-%}" icon1" alt="ICON">
+				</a>
+				{% endif %}
 			</div>
 		</div>
 		<div class="container flex-r p-t-8 p-b-8">
