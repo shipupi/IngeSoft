@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Product, Category
 from cart.forms import CartAddProductForm
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 # Create your views here.
@@ -12,6 +13,7 @@ def product_list(request, slug=None):
     category = None
     price_min = request.GET.get("price_min", 0)
     price_max = request.GET.get("price_max", 1000000)
+    search= request.GET.get("search")
     per_page = 12
     page = request.GET.get("page")
     categories = Category.objects.all()
@@ -19,9 +21,11 @@ def product_list(request, slug=None):
         category = get_object_or_404(Category, slug=slug)
         products = category.products.all()
     else:
-        products = Product.objects.filter(available=True, price__lte=price_max, price__gte=price_min)
-
-    products = products.filter(available=True, price__lte=price_max, price__gte=price_min)
+        products = Product.objects.filter(available=True, price__lte=price_max,
+                price__gte=price_min)
+    if search:
+        products = products.filter(available=True, price__lte=price_max,
+            price__gte=price_min, name__icontains=search)
 
     print(len(products))
     paginator = Paginator(products, per_page)
@@ -43,38 +47,3 @@ def product_detail(request, id, slug):
 
     }
     return render(request, 'products/product_detail.html', context)
-
-class CategoryList(ListView): 
-	model = Category
-
-class ProductList(ListView): 
-	model = Product
-
-class CategoryDetail(DetailView): 
-	model = Category
-
-class ProductDetail(DetailView): 
-	model = Product
-
-class CategoryCreate(CreateView): 
-	model = Category
-	fields = ['name']
-
-class ProductCreate(CreateView): 
-	model = Product
-	fields = ['name', 'description','image','category','stock']
-
-class CategoryUpdate(UpdateView): 
-	model = Category
-	fields = ['name']
-
-class ProductUpdate(UpdateView): 
-	model = Product
-	fields = ['name', 'description','image','category','stock']
-
-
-class CategoryDelete(DeleteView): 
-	model = Category
-
-class ProductDelete(DeleteView): 
-	model = Product
