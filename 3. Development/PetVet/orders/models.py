@@ -53,7 +53,7 @@ class OrderItem(models.Model):
         return '{}'.format(self.id)
 
     def get_cost(self):
-        return self.price * self.quantity
+        return self.price
 
     def get_total_cost(self):
         return self.price * self.quantity

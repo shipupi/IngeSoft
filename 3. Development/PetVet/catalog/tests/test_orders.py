@@ -145,7 +145,7 @@ class OrdersViewTest(TestCase):
         orderItem1 = OrderItem.objects.get(product=self.product1)
         orderItem2 = OrderItem.objects.get(product=self.product2)
 
-        # Verifying orderItem1
+        # Verifying orderItem1reverse('login_page')
         self.assertTrue(orderItem1.order.first_name == form.first_name)
         self.assertTrue(orderItem1.order.last_name == form.last_name)
         self.assertTrue(orderItem1.order.email == form.email)
@@ -160,12 +160,15 @@ class OrdersViewTest(TestCase):
         self.assertTrue(orderItem1.product == self.product1)
         self.assertTrue(orderItem1.price == Decimal("100"))
         self.assertTrue(orderItem1.quantity == 1)
+        self.assertTrue(orderItem1.get_cost() == orderItem1.get_total_cost())
         
         # Verifying orderItem2
         self.assertEqual(orderItem2.order, orderItem1.order)
         self.assertTrue(orderItem2.product == self.product2)
         self.assertTrue(orderItem2.price == Decimal("200"))
         self.assertTrue(orderItem2.quantity == 2)
+        self.assertTrue(orderItem2.get_total_cost() == Decimal("400"))
+
 
     # ------------- Order List View -------------- #
 
@@ -176,7 +179,7 @@ class OrdersViewTest(TestCase):
     def test_empty_order_list_with_user_authenticated(self):
         self.client.login(username = self.username, password = self.password)
         response = self.client.get(reverse('orders:orders_list'))
-        self.assertEqual(list(response.orders), list())
+        self.assertEqual(list(response.context['orders']), list())
         self.assertTemplateUsed(response,'orders/list.html')
     
     """
@@ -191,8 +194,8 @@ class OrdersViewTest(TestCase):
         postResponse = self.client.post(reverse('orders:order_create'), data)
      
         getResponse = self.client.get(reverse('orders:orders_list'))
-        self.assertEqual(list(getResponse.orders), list(Order.objects.all()))
-        self.assertEqual(len(list(getResponse.orders)), 1)
+        self.assertEqual(list(getResponse.context['orders']), list(Order.objects.all()))
+        self.assertEqual(len(list(getResponse.context['orders'])), 1)
 
     """
     A GET to the order_list view with a non authenticated user 
