@@ -7,11 +7,11 @@
 	<title>{% block title %}{% endblock %}</title>
 </head>
 <body class="animsition">
-
+	<div class="content">
 	{% include 'base/navbar.html' %}
 	{% block content %}
     {% endblock %}
-	
+	</div>
 	{% include 'base/footer/_footer.html' %}
 	{% block customjs %}
     {% endblock %}
