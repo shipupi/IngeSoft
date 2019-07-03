@@ -1330,6 +1330,7 @@ li.sale-noti > a {
     display: -moz-box;
     display: -ms-flexbox;
     display: flex !important;
+    margin-bottom: 35px;
   }
   .wrap_header {display: none;}
 
@@ -2356,7 +2357,7 @@ input[type="search"] {
 	transition: all 2s;
 }
 
-a.fa-search {
+button.fa-search {
 	height: 40px;
 	width: 40px;
 	background-color: black;
@@ -2372,7 +2373,7 @@ a.fa-search {
 	transition: all .3s;
 }
 
-a.fa-search:hover {
+button.fa-search:hover {
 	background-color: #e65540;
 }
 
