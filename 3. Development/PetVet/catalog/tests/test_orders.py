@@ -108,9 +108,7 @@ class OrdersViewTest(TestCase):
     def test_order_create_view_get(self):
         response = self.client.get(reverse('orders:order_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,'orders/form.html')
-        self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
-        self.assertRedirects(response, '/cart')
+        self.assertRedirects(response, reverse('cart:cart_detail'))
 
     """
     A POST to the create_order view with invalid form data
@@ -121,7 +119,7 @@ class OrdersViewTest(TestCase):
             response = self.client.post(reverse('orders:order_create'), invalid_data)
             self.assertEqual(response.status_code, 200)
             self.failUnless(isinstance(response.context['form'], forms.OrderCreateForm))
-            self.assertRedirects(response, '/orders')
+            self.assertTemplateUsed(response,'cart/detail.html')
 
     """  
     A POST of valid data with a non empty cart creates the correct OrderItem

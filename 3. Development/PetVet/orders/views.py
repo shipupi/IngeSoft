@@ -10,14 +10,14 @@ def orders_list(request):
         orders = Order.objects.filter(user=request.user)
         return render(request, 'orders/list.html', {'orders': orders})
     else:
-        return redirect('/login')
+        return redirect(reverse('login_page)'))
 
 def order_create(request):
     cart = Cart(request)
     form = OrderCreateForm(request.POST)
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return redirect('/login')
+            return redirect(reverse('login_page)'))
         if form.is_valid():
             order = form.save(commit=False)
             order.user = request.user
@@ -30,8 +30,8 @@ def order_create(request):
                     quantity=item['quantity']
                 )
             cart.clear()
-            return redirect('/orders')
+            return redirect(reverse('orders:orders_list'))
         else:
             print('invalid form')
             return render(request, "cart/detail.html", {'form': form, 'cart': cart})
-    return redirect('/cart')
+    return redirect(reverse('cart:cart_detail'))
