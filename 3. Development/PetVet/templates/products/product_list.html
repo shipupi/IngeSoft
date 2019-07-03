@@ -61,13 +61,13 @@
 						<div class="flex-sb-m flex-w p-t-16">
 							<div class="w-size11">
 								<!-- Button -->
-								<button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
+								<button id="filter-btn" class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
 									Filter
 								</button>
 							</div>
 
 							<div class="s-text3 p-t-10 p-b-10">
-								Range: $<span id="value-lower">0</span> - $<span id="value-upper">1000</span>
+								Range: $<span id="value-lower">0</span> - $<span id="value-upper">5000</span>
 							</div>
 						</div>
 					</div>
@@ -139,7 +139,7 @@
 				<div class="pagination flex-m flex-w p-t-26">
     				{% for i in products.paginator.page_range %}
 	    				{% if products.number == i %}
-							<a href="?page={{ i }}" class="item-pagination flex-c-m trans-0-4 active-pagination">{{ i }}</a>
+							<a onclick="goToPage({{ i }})" href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">{{ i }}</a>
 					    {% else %}
 							<a href="?page={{ i }}" class="item-pagination flex-c-m trans-0-4">{{ i }}</a>
 					    {% endif %}
@@ -150,4 +150,112 @@
 	</div>
 </section>
 
+{% endblock %}
+
+
+{% block customjs %}
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    "use strict";
+
+    var search = getQueryVariable('search')
+    if (search != false) {
+    	$('#search').val(search)
+    }
+
+    loadFilter()
+
+
+})
+
+function loadFilter() {
+	/*[ No ui ]
+    of-hiddenof-hidden===========================================================*/
+     filterBar = document.getElementById('filter-bar');
+    var price_min = getQueryVariable('price_min')
+	var price_max = getQueryVariable('price_max')
+
+	if(price_min == false) {price_min = 0} else { price_min = parseInt(price_min)}
+	if(price_max == false) {price_max = 5000} else { price_max = parseInt(price_max)}
+    noUiSlider.create(filterBar, {
+	    start: [ price_min, price_max],
+	    connect: true,
+	    range: {
+		    'min': 0,
+		    'max': 5000
+	    }
+    });
+	$('#value-lower').html(price_min)
+	$('#value-upper').html(price_max)
+    var skipValues = [
+    document.getElementById('value-lower'),
+    document.getElementById('value-upper')
+    ];
+
+    filterBar.noUiSlider.on('update', function( values, handle ) {
+    	skipValues[handle].innerHTML = Math.round(values[handle]) ;
+    });
+
+    $('#filter-btn').on('click', function() {
+    	var values = filterBar.noUiSlider.get()
+    	var min = Math.round(values[0])
+    	var max = Math.round(values[1])
+    	var page = getQueryVariable('page')
+		var search = getQueryVariable('search')
+    	var params = {}
+		if (search != false) {	
+			params.search = search
+		}
+		if (page != false) {	
+			params.page = page
+		}
+
+		params.price_min = min
+		params.price_max = max
+		var new_url = location.protocol+'//'+location.host+location.pathname + '?' + jQuery.param(params);;
+		window.location = new_url
+    })
+
+
+}
+
+function goToPage(pageNumber) {
+	var price_min = getQueryVariable('price_min')
+	var price_max = getQueryVariable('price_max')
+	var page = getQueryVariable('page')
+	var search = getQueryVariable('search')
+	// if (page == false) { page = 1 }
+	if (pageNumber != page) {
+		var params = {}
+		if (price_min != false) {	
+			params.price_min = price_min
+		}
+		if (search != false) {	
+			params.search = search
+		}
+
+		if (price_max != false) {	
+			params.price_max = price_max
+		}
+
+		params.page = pageNumber
+		var new_url = location.protocol+'//'+location.host+location.pathname + '?' + jQuery.param(params);;
+		window.location = new_url
+	}
+}
+function getQueryVariable(variable) {
+ var query = window.location.search.substring(1);
+ var vars = query.split('&');
+ for (var i=0; i<vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (pair[0] == variable) {
+        return pair[1];
+      }
+ }
+
+ return false;
+}
+</script>
 {% endblock %}
