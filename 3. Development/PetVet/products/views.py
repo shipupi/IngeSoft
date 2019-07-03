@@ -27,10 +27,8 @@ def product_list(request, slug=None):
                 price__gte=price_min)
 
     if search:
-        #print(products)
         products = products.filter(available=True, price__lte=price_max,
             price__gte=price_min, name__icontains=search)
-        #print(products)
 
     print(len(products))
     paginator = Paginator(products, per_page)

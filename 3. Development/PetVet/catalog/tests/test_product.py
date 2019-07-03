@@ -23,7 +23,7 @@ class ProductTest(TestCase):
         
         self.product1 = Product.objects.create(name="Prod1", slug="p1", description='', price=Decimal("100"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
         self.product2 = Product.objects.create(name="Prod2", slug="p2", description='', price=Decimal("500"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
-        self.product3 = Product.objects.create(name="Another", slug="p3", description='', price=Decimal("600"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
+        self.product3 = Product.objects.create(name="Another2", slug="p3", description='', price=Decimal("600"), available=True, stock=1, created_at=datetime.datetime.now(), image=test_photo)
         self.product1.categories.add(self.category)
         self.product2.categories.add(self.category)
         self.product2.categories.add(self.category3)
@@ -93,15 +93,14 @@ class ProductTest(TestCase):
         response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':'incorrect-slug'}))
         self.assertEqual(response.status_code, 404)
 
-
     """
     Testing the product listing with no slug and price interval between 220 to 1000
     Expected result --> product2 and product3
     """
     def test_product_list_interval_220_to_1000_no_slug(self):
         expectedList = []
-        expectedList.insert(0, self.product2)
-        expectedList.insert(1, self.product3)
+        expectedList.insert(0, self.product3)
+        expectedList.insert(1, self.product2)
 
         data = {
             'price_min': Decimal("220"),
@@ -186,7 +185,10 @@ class ProductTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['products']), [])
 
-    
+    """
+    Testing the product listing with no slug and price interval between 100 to 700 and search="Prod"
+    Expected result --> prod1 and prod2. 
+    """  
     def test_product_list_interval_100_to_700_search_prod_no_slug(self):
         expectedList = []
         expectedList.insert(0, self.product1)
@@ -198,5 +200,20 @@ class ProductTest(TestCase):
             'search': "Prod"
         }
         response = self.client.get(reverse('products:products_list'), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context['products']), expectedList)
+
+    """
+    Testing the product listing with category slug and no specified price. Search="2"
+    Expected result --> product2
+    """  
+    def test_product_list_search_2_with_category_slug(self):
+        expectedList = []
+        expectedList.insert(0, self.product2)
+
+        data = {
+            'search': "2"
+        }
+        response = self.client.get(reverse('products:product_list_by_category', kwargs={'slug': self.category.slug}), data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.context['products']), expectedList)
