@@ -30,7 +30,7 @@ def login_page(request):
         else:
             #failure page
             messages.error(request,'Wrong username or password')
-            return redirect('login_page')
+            return redirect(reverse('login_page'))
 
     return render(request, "auth/login.html", context)
 
@@ -60,6 +60,7 @@ def register_page(request):
 def logout_page(request):
     logout(request)
     return redirect("/")
+    
 #------------- REGISTRATION COMPLETE ----------------#
 def register_complete_page(request):
     template = 'auth/register_complete.html'

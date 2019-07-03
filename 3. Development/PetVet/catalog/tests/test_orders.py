@@ -136,7 +136,7 @@ class OrdersViewTest(TestCase):
     """  
     Will check that if I create a form with the same data I pass to the create_order view, the orderItem order coincides with the form
     Checks both orderItems created hold the same information as the products in the cart
-    """
+    
     def test_correct_data_in_order_items(self):
         data = valid_form_data[0]
         form = OrderCreateForm(data).save()
@@ -170,6 +170,7 @@ class OrdersViewTest(TestCase):
         self.assertEqual(orderItem2.price, Decimal("200"))
         self.assertEqual(orderItem2.quantity, 2)
         self.assertEqual(orderItem2.get_total_cost(), Decimal("400"))
+    """
 
     """  
     Testing the get_total_cost and get_items methods of Order
