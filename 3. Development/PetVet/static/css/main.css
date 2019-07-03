@@ -2404,3 +2404,12 @@ a.fa-search:hover {
   max-width: 270px;
   max-height: 360px;
 }
+
+.content {
+  min-height: calc(100vh - 39px);
+}
+
+.text-white {
+  color: white !important;
+}
+
