@@ -11,7 +11,8 @@ TPetPack's web-based solution for PetVet's Delivery Service
 
 ```
 		pip install django
-		pip django-credit-cards 
+		pip django-credit-cards
+		pip install parameterized
 ```
 
 ### Installation steps
