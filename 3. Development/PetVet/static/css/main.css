@@ -2402,8 +2402,12 @@ button.fa-search:hover {
 }
 
 .block2-img {
-  max-width: 270px;
-  max-height: 360px;
+  width: 270px;
+  height: 300px;
+  background-color: white;
+  align-items: center;
+  display: flex;
+  padding: 8px;
 }
 
 .content {
