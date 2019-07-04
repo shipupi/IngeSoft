@@ -67,7 +67,7 @@
 							</div>
 
 							<div class="s-text3 p-t-10 p-b-10">
-								Range: $<span id="value-lower">0</span> - $<span id="value-upper">5000</span>
+								Range: $<span id="value-lower">0</span> - $<span id="value-upper">200</span>
 							</div>
 						</div>
 					</div>
@@ -178,13 +178,13 @@ function loadFilter() {
 	var price_max = getQueryVariable('price_max')
 
 	if(price_min == false) {price_min = 0} else { price_min = parseInt(price_min)}
-	if(price_max == false) {price_max = 5000} else { price_max = parseInt(price_max)}
+	if(price_max == false) {price_max = 200} else { price_max = parseInt(price_max)}
     noUiSlider.create(filterBar, {
 	    start: [ price_min, price_max],
 	    connect: true,
 	    range: {
 		    'min': 0,
-		    'max': 5000
+		    'max': 200
 	    }
     });
 	$('#value-lower').html(price_min)
