@@ -147,7 +147,6 @@
                         <span class="m-text22 w-size19 w-full-sm">
                             Total:
                         </span>
-
                         <span class="m-text21 w-size20 w-full-sm r-text">
                             ${{ cart.get_total_price }}
                         </span>
@@ -155,12 +154,13 @@
                     <div>
                         
                     </div>
-
                     <div class="size15 trans-0-4">
                         <!-- Button -->
+                        {% if cart %}
                             <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
                                 Proceed to Checkout
                             </button>
+                        {% endif %}
                         </form>
                     </div>
                 </form>
