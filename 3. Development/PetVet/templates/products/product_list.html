@@ -141,7 +141,7 @@
 	    				{% if products.number == i %}
 							<a onclick="goToPage({{ i }})" href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">{{ i }}</a>
 					    {% else %}
-							<a href="?page={{ i }}" class="item-pagination flex-c-m trans-0-4">{{ i }}</a>
+							<a onclick="goToPage({{ i }})" href="#" class="item-pagination flex-c-m trans-0-4">{{ i }}</a>
 					    {% endif %}
 					{% endfor %}
 				</div>

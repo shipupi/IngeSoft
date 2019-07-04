@@ -15,16 +15,15 @@ from orders.forms import OrderCreateForm
 from cart.cart import Cart
 from products.models import Product, Category
 
-
-valid_form_data = [{'first_name':'Test1', 'last_name':'User1','email':'tu1@gmail.com', 'address':'somewhere', 'postal_code':'12', 'city':'BA', 'created':datetime.datetime.now(), 'cc_number':'4925590926750799','cc_expiry':'01/2020','cc_code':'010','paid':True},
-		           {'first_name':'Test2', 'last_name':'User2','email':'tu2@yahoo.com', 'address':'out', 'postal_code':'12', 'city':'BA', 'cc_number':'5414331598041802', 'cc_expiry':'12/2025','cc_code':'199'},
-		           {'first_name':'Test3', 'last_name':'User3','email':'tu3@hotmail.com', 'address':'there', 'postal_code':'34', 'city':'London', 'cc_number':'6011204893370744','cc_expiry':'02/2021', 'cc_code':'120'}
+valid_form_data = [{'address':'somewhere', 'cc_number':'4925590926750799','cc_expiry':'01/2020','cc_code':'010'},
+		           {'address':'out', 'cc_number':'5414331598041802', 'cc_expiry':'12/2025','cc_code':'199'},
+		           {'address':'there', 'cc_number':'6011204893370744','cc_expiry':'02/2021', 'cc_code':'120'}
                   ]
 
-invalid_form_data = [{'first_name':'Test1', 'last_name':'User1','email':'tu1', 'address':'somewhere', 'postal_code':'12', 'city':'BA', 'created':datetime.datetime.now(), 'cc_number':'4925590926750790','cc_expiry':'01/2020','cc_code':'010','paid':True},
-	     	         {'first_name':'Really long name that will exceed the 60 maximum characters. Just a little more!', 'last_name':'User2','email':'tu2@yahoo.com', 'address':'out', 'postal_code':'12', 'city':'BA', 'cc_expiry':'12/2005'},
-		             {'first_name':'Test3', 'last_name':'User3','email':'tu3@hotmail.com', 'address':'there', 'postal_code':'34', 'city':'London', 'cc_number':'0000000000000000'},
-                     {'first_name':'Test3', 'last_name':'User3','email':'tu3@hotmail.com', 'address':'there', 'postal_code':'34', 'city':'London', 'cc_number':'6011204893370744', 'cc_expiry':'01/2001'}]
+invalid_form_data = [{'address':'somewhere', 'cc_number':'4925590926750790','cc_expiry':'01/2020','cc_code':'010'},
+	     	         {'address':'out', 'cc_expiry':'12/2005'},
+		             {'address':'there', 'cc_number':'0000000000000000'},
+                     {'address':'there', 'cc_number':'6011204893370744', 'cc_expiry':'01/2001'}]
 
 
 #----------------------------- ORDER FORM -------------------------------#
@@ -72,6 +71,7 @@ class OrdersViewTest(TestCase):
 
         self.client = Client()
         
+        # Settings so that the client and cart session can later be the same
         settings.SESSION_ENGINE = 'django.contrib.sessions.backends.file'
         engine = import_module(settings.SESSION_ENGINE)
         store = engine.SessionStore()
@@ -136,28 +136,26 @@ class OrdersViewTest(TestCase):
     """  
     Will check that if I create a form with the same data I pass to the create_order view, the orderItem order coincides with the form
     Checks both orderItems created hold the same information as the products in the cart
-    
+    """
     def test_correct_data_in_order_items(self):
         data = valid_form_data[0]
-        form = OrderCreateForm(data).save()
+        form = OrderCreateForm(data)
+
+        if form.is_valid():
+            order = form.cleaned_data
+        #print(form.cleaned_data.get('fields'))
 
         response = self.client.post(reverse('orders:order_create'), data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
         orderItem1 = OrderItem.objects.get(product=self.product1)
         orderItem2 = OrderItem.objects.get(product=self.product2)
 
         # Verifying orderItem1reverse('login_page')
-        self.assertTrue(orderItem1.order.first_name == form.first_name)
-        self.assertTrue(orderItem1.order.last_name == form.last_name)
-        self.assertTrue(orderItem1.order.email == form.email)
-        self.assertTrue(orderItem1.order.address == form.address)
-        self.assertTrue(orderItem1.order.city == form.city)
-        self.assertTrue(orderItem1.order.postal_code == form.postal_code)
-        self.assertTrue(orderItem1.order.cc_number == form.cc_number)
-        self.assertTrue(orderItem1.order.cc_expiry == form.cc_expiry)
-        self.assertTrue(orderItem1.order.cc_code == form.cc_code)
-        self.assertTrue(orderItem1.order.paid == form.paid)
+        self.assertEqual(orderItem1.order.address, order['address'])
+        self.assertEqual(orderItem1.order.cc_number, order['cc_number'])
+        self.assertEqual(orderItem1.order.cc_expiry, order['cc_expiry'])
+        self.assertEqual(orderItem1.order.cc_code, order['cc_code'])
 
         self.assertTrue(orderItem1.product == self.product1)
         self.assertEqual(orderItem1.price, Decimal("100"))
@@ -170,7 +168,7 @@ class OrdersViewTest(TestCase):
         self.assertEqual(orderItem2.price, Decimal("200"))
         self.assertEqual(orderItem2.quantity, 2)
         self.assertEqual(orderItem2.get_total_cost(), Decimal("400"))
-    """
+    
 
     """  
     Testing the get_total_cost and get_items methods of Order
@@ -221,4 +219,3 @@ class OrdersViewTest(TestCase):
         self.client.logout()
         response = self.client.get(reverse('orders:orders_list'))
         self.assertEqual(response.status_code, 302)     #Must go to the login page before accessing requested resource
-

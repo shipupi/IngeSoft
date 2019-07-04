@@ -7,8 +7,9 @@
 			<div class="header-aligner">
 				<!-- Logo -->
 				<div class="header-logo">
-					<a href="/" class="logo">
-						<img src="{% static "images/icons/logo.png" alt="%}" IMG-LOGO">
+					<a id="logo-wrapper" href="/" class="logo-mobile">
+						<img id="logo" src="{% static "images/icons/logo.png" alt="%}" IMG-LOGO">
+						<img id="logo-hover" src="{% static "images/icons/logo-hover.png" alt="%}" IMG-LOGO">
 					</a>
 				</div>
 				<!-- Menu -->
@@ -29,31 +30,36 @@
 				<div class="wrap-icons">
 					<div class="header-icons">
 						{% if not request.user.is_anonymous %}
-                        <p>{{ user }}</p>
+			            <p>{{ user }}</p>
 						<span class="divide1"></span>
 						<img src="{% static "images/icons/icon-header-01.png" class="header-%}" icon1" alt="ICON">
 						<span class="linedivide1"></span>
 						{% endif %}
 
-
-						<a href="/orders" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Orders">
-							<img src="{% static "images/icons/icon-header-03.png" class="header-%}" icon1" alt="ICON">
+						<a id="icon-header-01-wrapper" href="/orders" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Orders">
+							<img id="icon-header-01" src="{% static "images/icons/icon-header-03.png" class="header-%}" icon1" alt="ICON">
+							<img id="icon-header-01-hover" src="{% static "images/icons/icon-header-03-hover.png" class="header-%}" icon1" alt="ICON">
 						</a>
 
 						<span class="linedivide1"></span>
 
-						<a href="/cart" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Cart">
-							<img src="{% static "images/icons/icon-header-02.png" class="header-%}" icon1" alt="ICON">
+						<a id="icon-header-02-wrapper" href="/cart" class="header-wrapicon1 dis-block header-2" data-toggle="tooltip" title="My Cart">
+							<img id="icon-header-02" src="{% static "images/icons/icon-header-02.png" class="header-%}" icon1" alt="ICON">
+							<img id="icon-header-02-hover" src="{% static "images/icons/icon-header-02-hover.png" class="header-%}" icon1" alt="ICON">
 							<span class="header-icons-noti">0</span>
 						</a>
+
 						<span class="linedivide1"></span>
+
 						{% if request.user.is_anonymous %}
-						<a href="/login" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Login">
-							<img src="{% static "images/icons/door.png" class="header-%}" icon1" alt="ICON">
+						<a id="icon-header-03-wrapper" href="/login" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Login">
+							<img id="icon-header-03" src="{% static "images/icons/door.png" class="header-%}" icon1" alt="ICON">
+							<img id="icon-header-03-hover" src="{% static "images/icons/door-hover.png" class="header-%}" icon1" alt="ICON">
 						</a>
 						{% else %}
-						<a href="/logout" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Logout">
-							<img src="{% static "images/icons/door-back.png" class="header-%}" icon1" alt="ICON">
+						<a id="icon-header-04-wrapper" href="/logout" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Logout">
+							<img id="icon-header-04" src="{% static "images/icons/door-back.png" class="header-%}" icon1" alt="ICON">
+							<img id="icon-header-04-hover" src="{% static "images/icons/door-back-hover.png" class="header-%}" icon1" alt="ICON">
 						</a>
 						{% endif %}
 					</div>
@@ -63,8 +69,9 @@
 	</div>
 	<div class="wrap_header_mobile">
 		<!-- Logo moblie -->
-		<a href="index.html" class="logo-mobile">
-			<img src="{% static "images/icons/logo.png" alt="%}" IMG-LOGO">
+		<a id="logo-wrapper" href="/" class="logo-mobile">
+			<img id="logo" src="{% static "images/icons/logo.png" alt="%}" IMG-LOGO">
+			<img id="logo-hover" src="{% static "images/icons/logo-hover.png" alt="%}" IMG-LOGO">
 		</a>
 
 		<!-- Button show menu -->
@@ -78,26 +85,30 @@
 				<span class="linedivide1"></span>
 				{% endif %}
 
-				<a href="/orders" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Orders">
-					<img src="{% static "images/icons/icon-header-03.png" class="header-%}" icon1" alt="ICON">
+				<a id="icon-header-01-wrapper" href="/orders" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Orders">
+					<img id="icon-header-01" src="{% static "images/icons/icon-header-03.png" class="header-%}" icon1" alt="ICON">
+					<img id="icon-header-01-hover" src="{% static "images/icons/icon-header-03-hover.png" class="header-%}" icon1" alt="ICON">
 				</a>
 
 				<span class="linedivide1"></span>
 
-				<a href="/cart" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="My Cart">
-					<img src="{% static "images/icons/icon-header-02.png" class="header-%}" icon1" alt="ICON">
+				<a id="icon-header-02-wrapper" href="/cart" class="header-wrapicon1 dis-block header-2" data-toggle="tooltip" title="My Cart">
+					<img id="icon-header-02" src="{% static "images/icons/icon-header-02.png" class="header-%}" icon1" alt="ICON">
+					<img id="icon-header-02-hover" src="{% static "images/icons/icon-header-02-hover.png" class="header-%}" icon1" alt="ICON">
 					<span class="header-icons-noti">0</span>
 				</a>
 
 				<span class="linedivide1"></span>
 
 				{% if request.user.is_anonymous %}
-				<a href="/login" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Login">
-					<img src="{% static "images/icons/door.png" class="header-%}" icon1" alt="ICON">
+				<a id="icon-header-03-wrapper" href="/login" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Login">
+					<img id="icon-header-03" src="{% static "images/icons/door.png" class="header-%}" icon1" alt="ICON">
+					<img id="icon-header-03-hover" src="{% static "images/icons/door-hover.png" class="header-%}" icon1" alt="ICON">
 				</a>
 				{% else %}
-				<a href="/logout" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Logout">
-					<img src="{% static "images/icons/door-back.png" class="header-%}" icon1" alt="ICON">
+				<a id="icon-header-04-wrapper" href="/logout" class="header-wrapicon1 dis-block" data-toggle="tooltip" title="Logout">
+					<img id="icon-header-04" src="{% static "images/icons/door-back.png" class="header-%}" icon1" alt="ICON">
+					<img id="icon-header-04-hover" src="{% static "images/icons/door-back-hover.png" class="header-%}" icon1" alt="ICON">
 				</a>
 				{% endif %}
 			</div>
@@ -115,5 +126,4 @@
 			</div>
 		</div>
 	</div>
-
 </header>
