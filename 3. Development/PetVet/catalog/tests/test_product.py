@@ -8,6 +8,7 @@ import datetime
 from decimal import Decimal
 from products import urls
 from products.models import Product, Category
+from cart import forms
 
 class ProductTest(TestCase):
     @classmethod
@@ -74,12 +75,14 @@ class ProductTest(TestCase):
         self.assertEqual(response.status_code, 404)
        
     """
-    A GET to the product detail view uses the appropriate template
+    A GET to the product detail view uses the appropriate template and checks if context is correct
     """
     def test_existing_product_detail_view_get(self):
         response = self.client.get(reverse('products:product_detail', kwargs={'id':self.product1.id, 'slug':self.product1.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'products/product_detail.html')
+        self.assertEqual(response.context['product'], self.product1)
+        self.failUnless(isinstance(response.context['cart_product_form'], forms.CartAddProductForm))
 
     """
     A GET to the product detail view of a non existing product returns 404 in the response

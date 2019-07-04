@@ -16,9 +16,9 @@ test_case_data_login = {
                              ("ANA12", "ANA12", False),
                              ("testuserA", "testuserA", False)
                             ],
-    "wrong_password_login": [("testuser1", "qwerty", False),
-                             ("testuser2", "not correct", False),
-                             ("testuser3", "c2h$osn82/", False)
+    "wrong_password_login": [("testuserX0", "qwerty", False),
+                             ("testuserW0", "not correct", False),
+                             ("testuserZ0", "c2h$osn82/", False)
                             ],
     "wrong_username_existing_password_login": [("testuser!", "secretW", False),
                              ("test2", "secretX", False),
@@ -73,7 +73,8 @@ class LoginTest(TestCase):
 
         # If the user exists, should redirect me to the home page
         if(userExists == True):
-            self.assertRedirects(response, '/')        
+            self.assertRedirects(response, '/')   
+                   
 
     # Will delete all the users created in setUpClass
     @classmethod
