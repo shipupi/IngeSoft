@@ -31,7 +31,7 @@ TPetPack's web-based solution for PetVet's Delivery Service
 #### Run the server
 
 ```
-		python3 manage.py runserver
+		python3 manage.py runserver --insecure
 ```
 
 ## Completed
