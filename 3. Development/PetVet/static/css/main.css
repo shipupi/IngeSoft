@@ -2414,3 +2414,18 @@ button.fa-search:hover {
   color: white !important;
 }
 
+#logo-wrapper #logo, #logo-wrapper:hover #logo-hover,
+#icon-header-01-wrapper #icon-header-01, #icon-header-01-wrapper:hover #icon-header-01-hover,
+#icon-header-02-wrapper #icon-header-02, #icon-header-02-wrapper:hover #icon-header-02-hover,
+#icon-header-03-wrapper #icon-header-03, #icon-header-03-wrapper:hover #icon-header-03-hover,
+#icon-header-04-wrapper #icon-header-04, #icon-header-04-wrapper:hover #icon-header-04-hover {
+  display: inline;
+}
+
+#logo-wrapper:hover #logo, #logo-wrapper #logo-hover,
+#icon-header-01-wrapper:hover #icon-header-01, #icon-header-01-wrapper #icon-header-01-hover,
+#icon-header-02-wrapper:hover #icon-header-02, #icon-header-02-wrapper #icon-header-02-hover,
+#icon-header-03-wrapper:hover #icon-header-03, #icon-header-03-wrapper #icon-header-03-hover,
+#icon-header-04-wrapper:hover #icon-header-04, #icon-header-04-wrapper #icon-header-04-hover {
+  display: none;
+}
