@@ -30,7 +30,6 @@ def product_list(request, slug=None):
         products = products.filter(available=True, price__lte=price_max,
             price__gte=price_min, name__icontains=search)
 
-    print(len(products))
     paginator = Paginator(products, per_page)
     products = paginator.get_page(page)
     context = {

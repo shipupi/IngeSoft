@@ -33,6 +33,5 @@ def order_create(request):
             cart.clear()
             return redirect('/orders')
         else:
-            print('invalid form')
             return render(request, "cart/detail.html", {'form': form, 'cart': cart})
     return redirect('/cart')

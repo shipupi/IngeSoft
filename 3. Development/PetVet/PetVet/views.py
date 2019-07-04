@@ -16,7 +16,6 @@ def login_page(request):
     #print("User logged in?")
     #print(request.user.is_authenticated)
     if login_form.is_valid():
-        print(login_form.cleaned_data)
         username = login_form.cleaned_data.get("username")
         password = login_form.cleaned_data.get("password")
         user = authenticate(request, username=username, password=password)
@@ -43,19 +42,16 @@ def register_page(request):
         "form" : register_form
     }
     if register_form.is_valid():
-        print(register_form.cleaned_data)
         username = register_form.cleaned_data.get("username")
         email = register_form.cleaned_data.get("email")
         password = register_form.cleaned_data.get("password")
         new_user = User.objects.create_user(username=username, email=email,
                 password=password)
-        print(new_user)
         login(request, new_user)
         # Redirect the user to the registration complete page
         return redirect('/')
     else:
-        print('invalid form')
-    return render(request, "auth/register.html", context)
+        return render(request, "auth/register.html", context)
 
 def logout_page(request):
     logout(request)
